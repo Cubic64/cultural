@@ -38,7 +38,39 @@ app.get('/api/competitions',auth,async(req,res)=>{try{res.json(await q('SELECT *
 app.post('/api/competitions',auth,admin,async(req,res)=>{try{let x=req.body;res.json((await q('INSERT INTO competitions(title,date,time,venue,description,document_url) VALUES($1,$2,$3,$4,$5,$6) RETURNING *',[x.title,x.date,x.time||null,x.venue||'',x.description||'',x.document_url||'']))[0])}catch(e){console.error(e);res.status(500).json({error:e.message})}});
 app.put('/api/competitions/:id',auth,admin,async(req,res)=>{try{let x=req.body,row=(await q('UPDATE competitions SET title=$1,date=$2,time=$3,venue=$4,description=$5,document_url=$6 WHERE id=$7 RETURNING *',[x.title,x.date,x.time||null,x.venue||'',x.description||'',x.document_url||'',req.params.id]))[0];if(!row)return res.status(404).json({error:'Competition not found'});res.json(row)}catch(e){console.error(e);res.status(500).json({error:e.message})}});
 app.delete('/api/competitions/:id',auth,admin,async(req,res)=>{try{await q('DELETE FROM competitions WHERE id=$1',[req.params.id]);res.json({ok:true})}catch(e){console.error(e);res.status(500).json({error:e.message})}});
-app.get('/api/announcements',auth,async(req,res)=>res.json(await q('SELECT * FROM announcements ORDER BY created_at DESC')));
+app.get('/api/announcements',auth,async(req,res)=>{
+  try{
+    const rows=await q('SELECT * FROM announcements ORDER BY pinned DESC, created_at DESC');
+    res.json(rows);
+  }catch(e){console.error(e);res.status(500).json({error:e.message})}
+});
+app.post('/api/announcements',auth,admin,async(req,res)=>{
+  try{
+    const x=req.body;
+    const row=(await q(
+      'INSERT INTO announcements(title,text,priority,pinned) VALUES($1,$2,$3,$4) RETURNING *',
+      [x.title||'',x.text||'',x.priority||'normal',!!x.pinned]
+    ))[0];
+    res.json(row);
+  }catch(e){console.error(e);res.status(500).json({error:e.message})}
+});
+app.put('/api/announcements/:id',auth,admin,async(req,res)=>{
+  try{
+    const x=req.body;
+    const row=(await q(
+      'UPDATE announcements SET title=$1,text=$2,priority=$3,pinned=$4 WHERE id=$5 RETURNING *',
+      [x.title||'',x.text||'',x.priority||'normal',!!x.pinned,req.params.id]
+    ))[0];
+    if(!row)return res.status(404).json({error:'Announcement not found'});
+    res.json(row);
+  }catch(e){console.error(e);res.status(500).json({error:e.message})}
+});
+app.delete('/api/announcements/:id',auth,admin,async(req,res)=>{
+  try{
+    await q('DELETE FROM announcements WHERE id=$1',[req.params.id]);
+    res.json({ok:true});
+  }catch(e){console.error(e);res.status(500).json({error:e.message})}
+});
 app.post('/api/announcements',auth,admin,async(req,res)=>{let x=req.body;res.json(await q('INSERT INTO announcements(title,text) VALUES($1,$2) RETURNING *',[x.title,x.text]))});
 app.get('/api/profile',auth,async(req,res)=>{let u=(await q('SELECT id,name,email,role FROM users WHERE id=$1',[req.user.id]))[0],groups=await q('SELECT g.* FROM groups g JOIN user_groups ug ON ug.group_id=g.id WHERE ug.user_id=$1',[u.id]),records=await q('SELECT a.*,g.name group_name FROM attendance a JOIN groups g ON g.id=a.group_id WHERE a.user_id=$1 ORDER BY a.date DESC',[u.id]);let good=records.filter(x=>x.status!=='absent').length,absent=records.filter(x=>x.status==='absent').length;res.json({...u,groups,records,good,absent,percent:records.length?Math.round(good/records.length*100):0})});
 app.get('/api/attendance',auth,admin,async(req,res)=>{let date=req.query.date,gs=await q('SELECT * FROM groups ORDER BY id');for(let g of gs){g.members=await q(`SELECT u.id,u.name,COALESCE((SELECT status FROM attendance WHERE user_id=u.id AND group_id=$1 AND date=$2),'') today,COALESCE((SELECT round(100.0*count(*) FILTER(WHERE status IN ('present','late'))/NULLIF(count(*),0)) FROM attendance WHERE user_id=u.id AND group_id=$1),0) percent FROM users u JOIN user_groups ug ON ug.user_id=u.id WHERE ug.group_id=$1 AND u.role='member' ORDER BY u.name`,[g.id,date])}res.json({groups:gs})});
