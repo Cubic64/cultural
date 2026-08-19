@@ -83,122 +83,33 @@ if(current.role==='admin')sidebar.innerHTML=`<div class="eyebrow">ADMIN CONTROL<
 else sidebar.innerHTML=`<div class="eyebrow">MY PORTAL</div>${common}<div class="section"><div class="eyebrow">MY GROUPS</div>${(current.groups||[]).map(g=>`<button onclick="showPage('chat',${g.id})">💬 ${esc(g.name)}</button>`).join('')}</div>`}
 async function showPage(p,arg){try{page=p; if(p==='admin')await adminPage();else if(p==='home')await homePage();else if(p==='members')await membersPage();else if(p==='groups')await groupsPage();else if(p==='attendance')await attendancePage();else if(p==='events')await eventsPage();else if(p==='calendar')await calendarPage();else if(p==='announcements')await announcementPage();else if(p==='profile')await profilePage();else if(p==='chat')await chatPage(arg)}catch(e){toast(e.message)}}
 async function homePage(){let [s,ev,an]=await Promise.all([api('/dashboard'),api('/competitions'),api('/announcements')]);main.innerHTML=`<div class="hero"><div class="eyebrow">${current.role==='admin'?'ADMIN DASHBOARD':'MEMBER PORTAL'}</div><h1>Hello, ${esc(current.name.split(' ')[0])} 👋</h1><p class="muted">Your cultural team, competitions, attendance, announcements and conversations in one place.</p></div><div class="grid"><div class="card stat"><strong>${s.membersOrGroups}</strong><span>${current.role==='admin'?'Members':'My Groups'}</span></div><div class="card stat"><strong>${s.competitions}</strong><span>Upcoming Competitions</span></div><div class="card stat"><strong>${s.attendance}</strong><span>${current.role==='admin'?'Attendance Records':'My Attendance Records'}</span></div></div><div class="section"><h2>📌 Upcoming Competitions</h2><div class="grid2">${eventsHtml(ev.slice(0,2))}</div></div><div class="section"><h2>📣 Announcements</h2>${an.slice(0,3).map(a=>`<div class="card notice"><b>${esc(a.title)}</b><div>${esc(a.text)}</div><small>${a.date}</small></div>`).join('')}</div>`}
-function eventsHtml(a){
-  return a.map(c=>`<div class="card event">
-    ${c.image_url?`<img src="${esc(c.image_url)}" alt="" style="width:100%;max-height:180px;object-fit:cover;border-radius:12px;margin-bottom:12px">`:''}
-    <div class="date">${esc(String(c.date||'').slice(5))}<br><small>${esc(c.time||'')}</small></div>
-    <div style="flex:1">
-      <h3>${esc(c.title)}</h3><p>${esc(c.description||'')}</p>
-      <small>📍 ${esc(c.venue||'')}</small>
-      <div style="margin-top:10px"><span class="pill">${esc(c.status||'upcoming')}</span> <span class="pill">${c.registration_count||0}${c.max_participants?'/'+c.max_participants:''} registered</span></div>
-      ${c.registration_deadline?`<small>Registration deadline: ${esc(c.registration_deadline)}</small><br>`:''}
-      ${c.attachment_url?`<a href="${esc(c.attachment_url)}" target="_blank" rel="noopener">📄 Competition document</a><br>`:''}
-      ${current.role!=='admin'?(c.registered?`<button class="btn light" onclick="unregisterCompetition(${c.id})">Cancel registration</button>`:`<button class="btn accent" onclick="registerCompetition(${c.id})">Register</button>`):''}
-      ${current.role==='admin'?`<button class="btn light" onclick="openCompetition(${c.id})">Edit</button> <button class="btn light" onclick="showParticipants(${c.id})">Participants</button> <button class="btn light" onclick="openResult(${c.id})">Result</button> <button class="btn danger" onclick="removeCompetition(${c.id})">Delete</button>`:''}
-    </div>
-  </div>`).join('')||'<div class="card">No competitions yet.</div>'
-}
-async function eventsPage(){let e=await api('/competitions');main.innerHTML=`<div class="hero"><div class="eyebrow">PIN BOARD</div><h1>Competitions</h1>${current.role==='admin'?'<button class="btn accent" onclick="openCompetition()">+ Add Competition</button>':''}</div><div class="grid2">${eventsHtml(e)}</div>`}
+function eventsHtml(a){return a.map(c=>`<div class="card event"><div class="date">${esc(String(c.date||'').slice(5))}<br><small>${esc(c.time||'')}</small></div><div style="flex:1"><h3>${esc(c.title)}</h3><p>${esc(c.description||'')}</p><small>📍 ${esc(c.venue||'')}</small>${c.document_url?`<br><a href="${esc(c.document_url)}" target="_blank" rel="noopener">📄 Competition document</a>`:''}${current.role==='admin'?`<div style="margin-top:12px"><button class="btn light" onclick="openCompetition(${c.id})">Edit</button> <button class="btn danger" onclick="removeCompetition(${c.id})">Delete</button></div>`:''}</div></div>`).join('')||'<div class="card">No competitions yet.</div>'}
 async function adminPage(){let s=await api('/dashboard');main.innerHTML=`<div class="hero"><div class="eyebrow">CONTROL CENTER</div><h1>Admin Dashboard</h1><p class="muted">You control members, groups, attendance, competitions, announcements and permissions.</p></div><div class="grid"><div class="card stat"><strong>${s.memberCount}</strong><span>Members</span></div><div class="card stat"><strong>${s.groupCount}</strong><span>Groups</span></div><div class="card stat"><strong>${s.attendance}</strong><span>Attendance Records</span></div></div><div class="section grid2"><div class="card"><h2>Quick actions</h2><button class="btn accent" onclick="openMember()">+ Add Member</button> <button class="btn" onclick="openGroup()">+ Add Group</button> <button class="btn light" onclick="openCompetition()">+ Competition</button></div><div class="card"><h2>Attendance overview</h2><p>Present: <b>${s.present}</b></p><p>Late: <b>${s.late}</b></p><p>Overall records: <b>${s.attendance}</b></p></div></div>`}
 async function membersPage(){let u=await api('/members');main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN</div><h1>Member Management</h1><button class="btn accent" onclick="openMember()">+ Add Member</button></div><div class="card tablewrap"><table class="table"><tr><th>Name</th><th>Email</th><th>Groups</th><th>Actions</th></tr>${u.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.email)}</td><td>${x.groups.map(g=>esc(g.name)).join(', ')}</td><td><button class="btn light" onclick="editMember(${x.id})">Edit</button> <button class="btn danger" onclick="removeMember(${x.id})">Remove</button></td></tr>`).join('')}</table></div>`}
 async function groupsPage(){let g=await api('/groups');main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN</div><h1>Group Management</h1><button class="btn accent" onclick="openGroup()">+ New Group</button></div><div class="grid">${g.map(x=>`<div class="card"><div class="avatar">${esc(x.name[0])}</div><h2>${esc(x.name)}</h2><p>${esc(x.description||'')}</p><p><b>Leader:</b> ${esc(x.leader_name||'Not assigned')}</p><button class="btn light" onclick="editGroup(${x.id})">Edit</button> <button class="btn danger" onclick="removeGroup(${x.id})">Delete</button></div>`).join('')}</div>`}
-async function attendancePage(){main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN</div><h1>Attendance Reports</h1><p class="muted">Mark daily attendance and see member percentages.</p></div><div class="card"><label class="field">Date<input id="attDate" type="date" value="${new Date().toISOString().slice(0,10)}" onchange="renderAttendanceTable()"></label><div id="attTable"></div></div>`;renderAttendanceTable()}
+async function attendancePage(){main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN</div><h1>Mark Member Attendance</h1><p class="muted">Admin controls daily attendance for every member. Choose the date and set Present, Late, or Absent.</p></div><div class="card"><label class="field">Date<input id="attDate" type="date" value="${new Date().toISOString().slice(0,10)}" onchange="renderAttendanceTable()"></label><div id="attTable"></div></div>`;renderAttendanceTable()}
 async function renderAttendanceTable(){try{let date=attDate.value,x=await api('/attendance?date='+date);attTable.innerHTML=x.groups.map(g=>`<h2>${esc(g.name)}</h2><div class="tablewrap"><table class="table"><tr><th>Member</th><th>Status</th><th>Attendance %</th></tr>${g.members.map(u=>`<tr><td>${esc(u.name)}</td><td><select onchange="setAttendance(${u.id},${g.id},'${date}',this.value)"><option value="present" ${u.today==='present'?'selected':''}>Present</option><option value="late" ${u.today==='late'?'selected':''}>Late</option><option value="absent" ${u.today==='absent'?'selected':''}>Absent</option></select></td><td><span class="pill ${u.percent>=75?'green':u.percent>=50?'yellow':'red'}">${u.percent}%</span></td></tr>`).join('')}</table></div>`).join('')}catch(e){toast(e.message)}}
-async function setAttendance(uid,gid,date,status){await api('/attendance',{method:'POST',body:JSON.stringify({user_id:uid,group_id:gid,date,status})});renderAttendanceTable()}
+async function setAttendance(uid,gid,date,status){try{await api('/attendance',{method:'POST',body:JSON.stringify({user_id:uid,group_id:gid,date,status})});toast('Attendance saved');renderAttendanceTable()}catch(e){toast(e.message)}}
 async function eventsPage(){let e=await api('/competitions');main.innerHTML=`<div class="hero"><div class="eyebrow">PIN BOARD</div><h1>Competitions</h1>${current.role==='admin'?'<button class="btn accent" onclick="openCompetition()">+ Add Competition</button>':''}</div><div class="grid2">${eventsHtml(e)}</div>`}
 async function calendarPage(){let e=await api('/competitions');main.innerHTML=`<div class="hero"><div class="eyebrow">EVENTS</div><h1>Competition Calendar</h1></div><div class="calendar">${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(x=>`<div class="day"><b>${x}</b></div>`).join('')}${Array.from({length:31},(_,i)=>{let d='2026-08-'+String(i+1).padStart(2,'0'),ev=e.filter(c=>c.date===d);return `<div class="day"><b>${i+1}</b>${ev.map(c=>`<div class="pill">${esc(c.title)}</div>`).join('')}</div>`}).join('')}</div>`}
-async function announcementPage(){
-  let a=await api('/announcements');
-  main.innerHTML=`<div class="hero"><div class="eyebrow">TEAM NEWS</div><h1>Announcements</h1>${current.role==='admin'?'<button class="btn accent" onclick="openAnnouncement()">+ New Announcement</button>':''}</div>
-  ${a.map(x=>`<div class="card notice">
-    <div style="display:flex;justify-content:space-between;gap:10px"><h3>${x.pinned?'📌 ':''}${esc(x.title)}</h3><span class="pill ${x.priority==='urgent'?'red':x.priority==='high'?'yellow':''}">${esc(x.priority||'normal')}</span></div>
-    <p>${esc(x.text)}</p><small>${esc(x.date||x.created_at||'')}</small>
-    ${x.attachment_url?`<br><a href="${esc(x.attachment_url)}" target="_blank" rel="noopener">📎 Attachment</a>`:''}
-    ${!x.is_read?`<br><button class="btn light" onclick="markAnnouncementRead(${x.id})">Mark as read</button>`:'<br><span class="pill green">Read</span>'}
-    ${current.role==='admin'?`<br><button class="btn light" onclick="openAnnouncement(${x.id})">Edit</button> <button class="btn danger" onclick="removeAnnouncement(${x.id})">Delete</button>`:''}
-  </div>`).join('')||'<div class="card">No announcements yet.</div>'}`
-}
+async function announcementPage(){let a=await api('/announcements');main.innerHTML=`<div class="hero"><div class="eyebrow">TEAM NEWS</div><h1>Announcements</h1>${current.role==='admin'?'<button class="btn accent" onclick="openAnnouncement()">+ New Announcement</button>':''}</div>${a.map(x=>`<div class="card notice"><h3>${esc(x.title)}</h3><p>${esc(x.text)}</p><small>${x.date}</small></div>`).join('')}`}
 async function profilePage(){let x=await api('/profile');main.innerHTML=`<div class="hero"><div class="eyebrow">MY PROFILE</div><h1>${esc(x.name)}</h1><p class="muted">${esc(x.email)}</p></div><div class="grid2"><div class="card"><h2>Personal Profile</h2><p><b>Name:</b> ${esc(x.name)}</p><p><b>Email:</b> ${esc(x.email)}</p><p><b>Role:</b> ${x.role}</p></div><div class="card"><h2>My Attendance</h2><div class="stat"><strong>${x.percent}%</strong><span>Overall attendance</span></div><p>Present/Late: ${x.good} · Absent: ${x.absent}</p></div></div><div class="section card"><h2>My Groups</h2>${x.groups.map(g=>`<span class="pill">${esc(g.name)}</span>`).join(' ')}</div><div class="section card"><h2>Files</h2><input id="fileUpload" type="file"><button class="btn accent" onclick="uploadFile()">Upload file</button><div id="uploadResult"></div></div><div class="section card"><h2>Attendance History</h2>${x.records.map(a=>`<div class="row"><span>${a.date} · ${esc(a.group_name)}</span><span class="pill ${a.status==='present'?'green':a.status==='late'?'yellow':'red'}">${a.status}</span></div>`).join('')||'No attendance recorded.'}</div>`}
 async function uploadFile(){const f=fileUpload.files[0];if(!f)return toast('Choose a file first');const fd=new FormData();fd.append('file',f);try{const r=await fetch(API+'/upload',{method:'POST',headers:{Authorization:'Bearer '+token},body:fd});const x=await r.json();if(!r.ok)throw Error(x.error||'Upload failed');uploadResult.innerHTML=`<div class="notice">Uploaded: <a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name)}</a></div>`;toast('File uploaded to Supabase Storage')}catch(e){toast(e.message)}}
 async function chatPage(gid){let g=(await api('/groups')).find(x=>x.id===+gid);main.innerHTML=`<div class="hero"><div class="eyebrow">GROUP CHAT</div><h1>${esc(g.name)} 💬</h1><p class="muted">${esc(g.description||'')}</p></div><div class="card chat"><div id="chatMessages" class="messages"></div><div class="composer"><input id="chatInput" placeholder="Message the ${esc(g.name)} group..."><button class="btn accent" onclick="sendMessage(${gid})">Send</button></div></div>`;renderMessages(gid)}
 async function renderMessages(gid){let m=await api('/groups/'+gid+'/messages');chatMessages.innerHTML=m.map(x=>`<div class="msg"><b>${esc(x.user_name)}</b><small>${new Date(x.created_at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</small><div>${esc(x.text)}</div></div>`).join('');chatMessages.scrollTop=chatMessages.scrollHeight}
 async function sendMessage(gid){let text=chatInput.value.trim();if(!text)return;await api('/groups/'+gid+'/messages',{method:'POST',body:JSON.stringify({text})});chatInput.value='';renderMessages(gid)}
 function closeModal(){modal.classList.add('hidden')}
-async function openMember(id=null){let groups=await api('/groups');modalBody.innerHTML=`<h2>${id?'Edit':'Add'} Member</h2><div class="field">Name<input id="mName"></div><div class="field">Email<input id="mEmail" type="email"></div><div class="field">Password<input id="mPass" value="Member@123"></div><div class="field">Groups<select id="mGroups" multiple>${groups.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join('')}</select></div><button class="btn accent" onclick="saveMember(${id||0})">Save</button>`;if(id){let u=(await api('/members')).find(x=>x.id===id);mName.value=u.name;mEmail.value=u.email;[...mGroups.options].forEach(o=>o.selected=u.groups.some(g=>g.id===+o.value))}modal.classList.remove('hidden')}
-async function saveMember(id){let groups=[...mGroups.selectedOptions].map(o=>+o.value);await api(id?'/members/'+id:'/members',{method:id?'PUT':'POST',body:JSON.stringify({name:mName.value,email:mEmail.value,password:mPass.value,groups})});closeModal();showPage('members')}
+async function openMember(id=null){let groups=await api('/groups');modalBody.innerHTML=`<h2>${id?'Edit':'Add'} Member</h2><div class="field">Name<input id="mName" autocomplete="off"></div><div class="field">Email<input id="mEmail" type="email" autocomplete="off"></div><div class="field">Password<input id="mPass" type="password" autocomplete="new-password" placeholder="${id?'Leave blank to keep current password':'Enter password'}"></div>${!id?'<div class="notice">The password entered here is the member login password. It is not replaced with a default password.</div>':''}<div class="field">Groups<select id="mGroups" multiple>${groups.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join('')}</select></div><button class="btn accent" onclick="saveMember(${id||0})">${id?'Save changes':'Create member'}</button>`;if(id){let u=(await api('/members')).find(x=>x.id===id);mName.value=u.name;mEmail.value=u.email;[...mGroups.options].forEach(o=>o.selected=u.groups.some(g=>g.id===+o.value))}modal.classList.remove('hidden')}
+async function saveMember(id){let groups=[...mGroups.selectedOptions].map(o=>+o.value),password=mPass.value;if(!id&&!password)return toast('Enter a password for this member');try{await api(id?'/members/'+id:'/members',{method:id?'PUT':'POST',body:JSON.stringify({name:mName.value,email:mEmail.value,password,groups})});closeModal();await showPage('members');toast(id?'Member updated':'Member created. Use the password you entered to log in.')}catch(e){toast(e.message)}}
 function editMember(id){openMember(id)}async function removeMember(id){if(confirm('Remove this member?')){await api('/members/'+id,{method:'DELETE'});showPage('members')}}
 async function openGroup(id=null){let users=await api('/members');modalBody.innerHTML=`<h2>${id?'Edit':'Create'} Group</h2><div class="field">Name<input id="gName"></div><div class="field">Description<textarea id="gDesc"></textarea></div><div class="field">Team leader<select id="gLeader"><option value="">None</option>${users.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('')}</select></div><button class="btn accent" onclick="saveGroup(${id||0})">Save</button>`;if(id){let g=(await api('/groups')).find(x=>x.id===id);gName.value=g.name;gDesc.value=g.description||'';gLeader.value=g.leader_id||''}modal.classList.remove('hidden')}
 async function saveGroup(id){await api(id?'/groups/'+id:'/groups',{method:id?'PUT':'POST',body:JSON.stringify({name:gName.value,description:gDesc.value,leader_id:gLeader.value||null})});closeModal();buildSidebar();showPage('groups')}
 function editGroup(id){openGroup(id)}async function removeGroup(id){if(confirm('Delete this group?')){await api('/groups/'+id,{method:'DELETE'});buildSidebar();showPage('groups')}}
-async function uploadPickedFile(inputId){
-  const f=document.getElementById(inputId)?.files?.[0]; if(!f)return null;
-  const fd=new FormData();fd.append('file',f);
-  const r=await fetch(API+'/upload',{method:'POST',headers:{Authorization:'Bearer '+token},body:fd});
-  const x=await r.json().catch(()=>({})); if(!r.ok)throw Error(x.error||'Upload failed'); return x.path;
-}
-async function openCompetition(id=null){
-  let item=id?(await api('/competitions')).find(x=>x.id===id):null;
-  modalBody.innerHTML=`<h2>${id?'Edit':'Add'} Competition</h2>
-  <div class="field">Title<input id="cTitle" value="${esc(item?.title||'')}"></div>
-  <div class="field">Date<input id="cDate" type="date" value="${esc(item?.date||'')}"></div>
-  <div class="field">Time<input id="cTime" type="time" value="${esc(item?.time||'')}"></div>
-  <div class="field">Venue<input id="cVenue" value="${esc(item?.venue||'')}"></div>
-  <div class="field">Description<textarea id="cDesc">${esc(item?.description||'')}</textarea></div>
-  <div class="field">Registration deadline<input id="cDeadline" type="date" value="${esc(item?.registration_deadline||'')}"></div>
-  <div class="field">Maximum participants<input id="cMax" type="number" min="1" value="${esc(item?.max_participants||'')}"></div>
-  <div class="field">Status<select id="cStatus"><option value="upcoming">Upcoming</option><option value="closed">Closed</option><option value="completed">Completed</option></select></div>
-  <div class="field">Document URL (optional)<input id="cDoc" value="${esc(item?.document_url||'')}"></div>
-  <div class="field">Upload document<input id="cFile" type="file" accept=".pdf,.doc,.docx,image/*"></div>
-  <div class="field">Upload competition image<input id="cImage" type="file" accept="image/*"></div>
-  <button class="btn accent" onclick="saveCompetition(${id||0})">${id?'Save changes':'Publish'}</button>`;
-  if(item)cStatus.value=item.status||'upcoming'; modal.classList.remove('hidden');
-}
-async function saveCompetition(id){
-  const old=id?(await api('/competitions')).find(x=>x.id===id):null;
-  const document_path=await uploadPickedFile('cFile')||old?.document_path||null;
-  const image_path=await uploadPickedFile('cImage')||old?.image_path||null;
-  await api(id?'/competitions/'+id:'/competitions',{method:id?'PUT':'POST',body:JSON.stringify({
-    title:cTitle.value,date:cDate.value,time:cTime.value,venue:cVenue.value,description:cDesc.value,
-    registration_deadline:cDeadline.value||null,max_participants:cMax.value?+cMax.value:null,status:cStatus.value,
-    document_url:cDoc.value,document_path,image_path,result:old?.result||'',winner:old?.winner||''
-  })});
-  closeModal();showPage('events');
-}
-async function registerCompetition(id){await api('/competitions/'+id+'/register',{method:'POST'});toast('Registered successfully');showPage('events')}
-async function unregisterCompetition(id){await api('/competitions/'+id+'/register',{method:'DELETE'});toast('Registration cancelled');showPage('events')}
-async function removeCompetition(id){if(confirm('Delete this competition?')){await api('/competitions/'+id,{method:'DELETE'});showPage('events')}}
-async function showParticipants(id){
-  const p=await api('/competitions/'+id+'/participants');
-  modalBody.innerHTML=`<h2>Participants</h2>${p.map(x=>`<div class="row"><span>${esc(x.name)}</span><small>${esc(x.email)}</small></div>`).join('')||'No registrations yet.'}`;
-  modal.classList.remove('hidden');
-}
-async function openResult(id){
-  const item=(await api('/competitions')).find(x=>x.id===id);
-  modalBody.innerHTML=`<h2>Competition Result</h2><div class="field">Result<textarea id="rResult">${esc(item?.result||'')}</textarea></div><div class="field">Winner<input id="rWinner" value="${esc(item?.winner||'')}"></div><div class="field">Status<select id="rStatus"><option value="completed">Completed</option><option value="closed">Closed</option></select></div><button class="btn accent" onclick="saveResult(${id})">Save result</button>`;
-  rStatus.value=item?.status==='closed'?'closed':'completed';modal.classList.remove('hidden');
-}
-async function saveResult(id){await api('/competitions/'+id+'/result',{method:'PATCH',body:JSON.stringify({result:rResult.value,winner:rWinner.value,status:rStatus.value})});closeModal();showPage('events')}
-async function openAnnouncement(id=null){
-  let item=id?(await api('/announcements')).find(x=>x.id===id):null;
-  modalBody.innerHTML=`<h2>${id?'Edit':'New'} Announcement</h2>
-  <div class="field">Title<input id="aTitle" value="${esc(item?.title||'')}"></div>
-  <div class="field">Message<textarea id="aText">${esc(item?.text||'')}</textarea></div>
-  <div class="field">Priority<select id="aPriority"><option value="normal">Normal</option><option value="high">High</option><option value="urgent">Urgent</option></select></div>
-  <label class="field"><input id="aPinned" type="checkbox" ${item?.pinned?'checked':''}> Pin announcement</label>
-  <div class="field">Attachment<input id="aFile" type="file" accept=".pdf,.doc,.docx,image/*"></div>
-  <button class="btn accent" onclick="saveAnnouncement(${id||0})">${id?'Save changes':'Publish'}</button>`;
-  if(item)aPriority.value=item.priority||'normal'; modal.classList.remove('hidden');
-}
-async function saveAnnouncement(id){
-  const old=id?(await api('/announcements')).find(x=>x.id===id):null;
-  const attachment_path=await uploadPickedFile('aFile')||old?.attachment_path||null;
-  await api(id?'/announcements/'+id:'/announcements',{method:id?'PUT':'POST',body:JSON.stringify({
-    title:aTitle.value,text:aText.value,priority:aPriority.value,pinned:aPinned.checked,attachment_path
-  })});
-  closeModal();showPage('announcements');
-}
-async function markAnnouncementRead(id){await api('/announcements/'+id+'/read',{method:'POST'});showPage('announcements')}
-async function removeAnnouncement(id){if(confirm('Delete this announcement?')){await api('/announcements/'+id,{method:'DELETE'});showPage('announcements')}}
+async function openCompetition(id=null){let item=id?(await api('/competitions')).find(x=>x.id===id):null;modalBody.innerHTML=`<h2>${id?'Edit':'Add'} Competition</h2><div class="field">Title<input id="cTitle" value="${esc(item?.title||'')}"></div><div class="field">Date<input id="cDate" type="date" value="${esc(item?.date||'')}"></div><div class="field">Time<input id="cTime" type="time" value="${esc(item?.time||'')}"></div><div class="field">Venue<input id="cVenue" value="${esc(item?.venue||'')}"></div><div class="field">Description<textarea id="cDesc">${esc(item?.description||'')}</textarea></div><div class="field">Document URL (optional)<input id="cDoc" placeholder="https://..." value="${esc(item?.document_url||'')}"></div><button class="btn accent" onclick="saveCompetition(${id||0})">${id?'Save changes':'Publish'}</button>`;modal.classList.remove('hidden')}
+async function saveCompetition(id){try{await api(id?'/competitions/'+id:'/competitions',{method:id?'PUT':'POST',body:JSON.stringify({title:cTitle.value,date:cDate.value,time:cTime.value,venue:cVenue.value,description:cDesc.value,document_url:cDoc.value})});closeModal();await showPage('events');toast(id?'Competition updated':'Competition published')}catch(e){toast(e.message)}}
+async function removeCompetition(id){if(!confirm('Delete this competition?'))return;try{await api('/competitions/'+id,{method:'DELETE'});await showPage('events');toast('Competition deleted')}catch(e){toast(e.message)}}
+function openAnnouncement(){modalBody.innerHTML=`<h2>New Announcement</h2><div class="field">Title<input id="aTitle"></div><div class="field">Message<textarea id="aText"></textarea></div><button class="btn accent" onclick="saveAnnouncement()">Publish</button>`;modal.classList.remove('hidden')}
+async function saveAnnouncement(){await api('/announcements',{method:'POST',body:JSON.stringify({title:aTitle.value,text:aText.value})});closeModal();showPage('announcements')}
 boot();
 </script>
 </body></html>
