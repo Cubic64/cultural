@@ -83,6 +83,41 @@ if(current.role==='admin')sidebar.innerHTML=`<div class="eyebrow">ADMIN CONTROL<
 else sidebar.innerHTML=`<div class="eyebrow">MY PORTAL</div>${common}<div class="section"><div class="eyebrow">MY GROUPS</div>${(current.groups||[]).map(g=>`<button onclick="showPage('chat',${g.id})">💬 ${esc(g.name)}</button>`).join('')}</div>`}
 async function showPage(p,arg){try{page=p; if(p==='admin')await adminPage();else if(p==='home')await homePage();else if(p==='members')await membersPage();else if(p==='groups')await groupsPage();else if(p==='attendance')await attendancePage();else if(p==='events')await eventsPage();else if(p==='calendar')await calendarPage();else if(p==='announcements')await announcementPage();else if(p==='profile')await profilePage();else if(p==='chat')await chatPage(arg)}catch(e){toast(e.message)}}
 async function homePage(){let [s,ev,an]=await Promise.all([api('/dashboard'),api('/competitions'),api('/announcements')]);main.innerHTML=`<div class="hero"><div class="eyebrow">${current.role==='admin'?'ADMIN DASHBOARD':'MEMBER PORTAL'}</div><h1>Hello, ${esc(current.name.split(' ')[0])} 👋</h1><p class="muted">Your cultural team, competitions, attendance, announcements and conversations in one place.</p></div><div class="grid"><div class="card stat"><strong>${s.membersOrGroups}</strong><span>${current.role==='admin'?'Members':'My Groups'}</span></div><div class="card stat"><strong>${s.competitions}</strong><span>Upcoming Competitions</span></div><div class="card stat"><strong>${s.attendance}</strong><span>${current.role==='admin'?'Attendance Records':'My Attendance Records'}</span></div></div><div class="section"><h2>📌 Upcoming Competitions</h2><div class="grid2">${eventsHtml(ev.slice(0,2))}</div></div><div class="section"><h2>📣 Announcements</h2>${an.slice(0,3).map(a=>`<div class="card notice"><b>${esc(a.title)}</b><div>${esc(a.text)}</div><small>${a.date}</small></div>`).join('')}</div>`}
+
+async function editAnnouncement(id){
+  try{
+    const rows=await api('/announcements');
+    const a=rows.find(x=>+x.id===+id);
+    if(!a){toast('Announcement not found');return}
+    modalBody.innerHTML=`<h2>Edit Announcement</h2>
+      <div class="field">Title<input id="aTitle" value="${esc(a.title||'')}"></div>
+      <div class="field">Message<textarea id="aText">${esc(a.text||a.message||'')}</textarea></div>
+      <div class="field">Priority<select id="aPriority">
+        <option value="normal" ${a.priority==='normal'||!a.priority?'selected':''}>Normal</option>
+        <option value="high" ${a.priority==='high'?'selected':''}>High</option>
+        <option value="urgent" ${a.priority==='urgent'?'selected':''}>Urgent</option>
+      </select></div>
+      <div class="field"><label><input id="aPinned" type="checkbox" ${a.pinned?'checked':''}> Pinned</label></div>
+      <button class="btn accent" onclick="saveAnnouncementEdit(${a.id})">Save changes</button>`;
+    modal.classList.remove('hidden');
+  }catch(e){toast(e.message)}
+}
+async function saveAnnouncementEdit(id){
+  try{
+    await api('/announcements/'+id,{method:'PUT',body:JSON.stringify({
+      title:aTitle.value,text:aText.value,priority:aPriority.value,pinned:aPinned.checked
+    })});
+    closeModal();await showPage('announcements');toast('Announcement updated');
+  }catch(e){toast(e.message)}
+}
+async function deleteAnnouncement(id){
+  if(!confirm('Delete this announcement?'))return;
+  try{
+    await api('/announcements/'+id,{method:'DELETE'});
+    await showPage('announcements');toast('Announcement deleted');
+  }catch(e){toast(e.message)}
+}
+
 function eventsHtml(a){return a.map(c=>`<div class="card event"><div class="date">${esc(String(c.date||'').slice(5))}<br><small>${esc(c.time||'')}</small></div><div style="flex:1"><h3>${esc(c.title)}</h3><p>${esc(c.description||'')}</p><small>📍 ${esc(c.venue||'')}</small>${c.document_url?`<br><a href="${esc(c.document_url)}" target="_blank" rel="noopener">📄 Competition document</a>`:''}${current.role==='admin'?`<div style="margin-top:12px"><button class="btn light" onclick="openCompetition(${c.id})">Edit</button> <button class="btn danger" onclick="removeCompetition(${c.id})">Delete</button></div>`:''}</div></div>`).join('')||'<div class="card">No competitions yet.</div>'}
 async function adminPage(){let s=await api('/dashboard');main.innerHTML=`<div class="hero"><div class="eyebrow">CONTROL CENTER</div><h1>Admin Dashboard</h1><p class="muted">You control members, groups, attendance, competitions, announcements and permissions.</p></div><div class="grid"><div class="card stat"><strong>${s.memberCount}</strong><span>Members</span></div><div class="card stat"><strong>${s.groupCount}</strong><span>Groups</span></div><div class="card stat"><strong>${s.attendance}</strong><span>Attendance Records</span></div></div><div class="section grid2"><div class="card"><h2>Quick actions</h2><button class="btn accent" onclick="openMember()">+ Add Member</button> <button class="btn" onclick="openGroup()">+ Add Group</button> <button class="btn light" onclick="openCompetition()">+ Competition</button></div><div class="card"><h2>Attendance overview</h2><p>Present: <b>${s.present}</b></p><p>Late: <b>${s.late}</b></p><p>Overall records: <b>${s.attendance}</b></p></div></div>`}
 async function membersPage(){let u=await api('/members');main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN</div><h1>Member Management</h1><button class="btn accent" onclick="openMember()">+ Add Member</button></div><div class="card tablewrap"><table class="table"><tr><th>Name</th><th>Email</th><th>Groups</th><th>Actions</th></tr>${u.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.email)}</td><td>${x.groups.map(g=>esc(g.name)).join(', ')}</td><td><button class="btn light" onclick="editMember(${x.id})">Edit</button> <button class="btn danger" onclick="removeMember(${x.id})">Remove</button></td></tr>`).join('')}</table></div>`}
