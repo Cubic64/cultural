@@ -26,6 +26,16 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:
 .notice{padding:14px;border-radius:12px;background:#eee5d8;margin:10px 0}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.day{min-height:80px;background:#fffdf9;border:1px solid #e1d8cb;border-radius:8px;padding:8px;font-size:12px}
 .mobile-menu{display:none}@media(max-width:900px){.side{display:none}.main{padding:22px 16px}.grid,.grid2{grid-template-columns:1fr}.mobile-menu{display:block}.calendar{grid-template-columns:repeat(2,1fr)}}
 .toast{position:fixed;right:20px;bottom:20px;background:#211f1c;color:#fff;padding:14px 18px;border-radius:10px;z-index:100}
+
+/* --- Professional admin UI upgrade --- */
+:root{--ink:#211f1c;--muted:#817a72;--paper:#fffdf9;--line:#e1d8cb;--accent:#93432c;--accent2:#b86143;--soft:#f0e6d9}
+.top{box-shadow:0 2px 18px #00000008}.side{background:linear-gradient(180deg,#fffaf3,#f7efe4)}
+.btn{transition:.18s transform,.18s box-shadow,.18s background}.btn:hover{transform:translateY(-1px);box-shadow:0 7px 18px #0002}.btn.sm{padding:8px 11px;font-size:13px}.btn.success{background:#3c7650}.btn.warn{background:#b47b19}
+.card{box-shadow:0 4px 18px #4b392b0a}.hero{margin-bottom:22px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}.toolbar .search{max-width:360px}.table th{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#817a72;background:#faf5ee}.table tr:hover td{background:#fffaf3}.member-card{display:flex;align-items:center;gap:14px}.member-avatar{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#ead8ca;color:#7d3825;font-weight:800;font-size:17px}.member-meta{min-width:0}.member-meta strong{display:block}.member-meta small{color:#817a72;display:block;overflow:hidden;text-overflow:ellipsis}.action-row{display:flex;gap:7px;flex-wrap:wrap}.calendar-year{margin-top:22px}.calendar-year h2{display:flex;justify-content:space-between;align-items:center;margin:0 0 12px;font:600 28px Georgia,serif}.months-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.month-card{background:#fffdf9;border:1px solid #e1d8cb;border-radius:16px;padding:13px;box-shadow:0 4px 14px #00000008}.month-title{font-weight:800;margin-bottom:9px}.month-week{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.month-week span{font-size:9px;text-align:center;color:#8a8178;font-weight:800}.month-day{min-height:31px;border:1px solid transparent;border-radius:7px;padding:4px;font-size:10px;position:relative}.month-day.has-event{background:#f3e1d3;border-color:#e4c6b4}.month-day .event-dot{display:block;width:5px;height:5px;border-radius:50%;background:#93432c;margin-top:2px}.month-day.empty{visibility:hidden}.month-day:hover{border-color:#cfae9b}.calendar-legend{display:flex;gap:14px;align-items:center;color:#817a72;font-size:12px;margin-top:10px}.attendance-shell{display:grid;grid-template-columns:210px 1fr;gap:16px}.group-tabs{display:flex;flex-direction:column;gap:7px}.group-tab{border:1px solid var(--line);background:var(--paper);padding:12px;border-radius:11px;text-align:left}.group-tab.active{background:#93432c;color:#fff;border-color:#93432c}.att-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line)}.att-row{display:grid;grid-template-columns:minmax(180px,1fr) 220px 90px;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #eee5db}.att-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.att-btn{border:1px solid #ddd4c8;background:#fff;padding:9px 5px;border-radius:9px;font-weight:700;font-size:12px}.att-btn.active.present{background:#dcebdc;border-color:#9cc2a0;color:#2d6737}.att-btn.active.late{background:#f5e8bf;border-color:#d9bd6a;color:#795b15}.att-btn.active.absent{background:#f2d9d5;border-color:#d5a39c;color:#8e3028}.att-row .percent{text-align:right}.calendar-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.calendar-controls select{width:auto}.competition-form{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px}.competition-form .full-field{grid-column:1/-1}.modal-card.wide{width:min(760px,100%)}
+@media(max-width:1100px){.months-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:850px){.months-grid{grid-template-columns:repeat(2,1fr)}.attendance-shell{grid-template-columns:1fr}.group-tabs{display:grid;grid-template-columns:repeat(2,1fr)}.att-row{grid-template-columns:1fr}.att-row .percent{text-align:left}.competition-form{grid-template-columns:1fr}}
+@media(max-width:560px){.months-grid{grid-template-columns:1fr}.group-tabs{grid-template-columns:1fr}.calendar-year h2{font-size:23px}}
+
 </style>
 </head>
 <body>
@@ -40,7 +50,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:
 <div id="app" class="app hidden">
 <header class="top"><div class="logo">CULTURA <span>TEAM</span></div><nav><button onclick="showPage('home')">Home</button><button onclick="showPage('calendar')">Calendar</button><button onclick="showPage('profile')">Profile</button><div class="avatar" id="avatar">C</div><button onclick="logout()">Logout</button></nav></header>
 <div class="shell"><aside class="side" id="sidebar"></aside><main class="main" id="main"></main></div></div>
-<div id="modal" class="modal hidden"><div class="modal-card"><button class="close" onclick="closeModal()">✕</button><div id="modalBody"></div></div></div>
+<div id="modal" class="modal hidden"><div id="modalCard" class="modal-card"><button class="close" onclick="closeModal()">✕</button><div id="modalBody"></div></div></div>
 <div id="toast" class="toast hidden"></div>
 <script>
 const API = location.hostname === 'localhost' ? 'http://localhost:4000/api' : '/api';
@@ -83,101 +93,135 @@ if(current.role==='admin')sidebar.innerHTML=`<div class="eyebrow">ADMIN CONTROL<
 else sidebar.innerHTML=`<div class="eyebrow">MY PORTAL</div>${common}<div class="section"><div class="eyebrow">MY GROUPS</div>${(current.groups||[]).map(g=>`<button onclick="showPage('chat',${g.id})">💬 ${esc(g.name)}</button>`).join('')}</div>`}
 async function showPage(p,arg){try{page=p; if(p==='admin')await adminPage();else if(p==='home')await homePage();else if(p==='members')await membersPage();else if(p==='groups')await groupsPage();else if(p==='attendance')await attendancePage();else if(p==='events')await eventsPage();else if(p==='calendar')await calendarPage();else if(p==='announcements')await announcementPage();else if(p==='profile')await profilePage();else if(p==='chat')await chatPage(arg)}catch(e){toast(e.message)}}
 async function homePage(){let [s,ev,an]=await Promise.all([api('/dashboard'),api('/competitions'),api('/announcements')]);main.innerHTML=`<div class="hero"><div class="eyebrow">${current.role==='admin'?'ADMIN DASHBOARD':'MEMBER PORTAL'}</div><h1>Hello, ${esc(current.name.split(' ')[0])} 👋</h1><p class="muted">Your cultural team, competitions, attendance, announcements and conversations in one place.</p></div><div class="grid"><div class="card stat"><strong>${s.membersOrGroups}</strong><span>${current.role==='admin'?'Members':'My Groups'}</span></div><div class="card stat"><strong>${s.competitions}</strong><span>Upcoming Competitions</span></div><div class="card stat"><strong>${s.attendance}</strong><span>${current.role==='admin'?'Attendance Records':'My Attendance Records'}</span></div></div><div class="section"><h2>📌 Upcoming Competitions</h2><div class="grid2">${eventsHtml(ev.slice(0,2))}</div></div><div class="section"><h2>📣 Announcements</h2>${an.slice(0,3).map(a=>`<div class="card notice"><b>${esc(a.title)}</b><div>${esc(a.text)}</div><small>${a.date}</small></div>`).join('')}</div>`}
-function eventsHtml(a){return a.map(c=>`<div class="card event"><div class="date">${esc(c.date.slice(5))}<br><small>${esc(c.time||'')}</small></div><div><h3>${esc(c.title)}</h3><p>${esc(c.description)}</p><small>📍 ${esc(c.venue)}</small>${c.document_url?`<br><a href="${esc(c.document_url)}" target="_blank">📄 Competition document</a>`:''}</div></div>`).join('')||'<div class="card">No competitions yet.</div>'}
-async function adminPage(){let s=await api('/dashboard');main.innerHTML=`<div class="hero"><div class="eyebrow">CONTROL CENTER</div><h1>Admin Dashboard</h1><p class="muted">You control members, groups, attendance, competitions, announcements and permissions.</p></div><div class="grid"><div class="card stat"><strong>${s.memberCount}</strong><span>Members</span></div><div class="card stat"><strong>${s.groupCount}</strong><span>Groups</span></div><div class="card stat"><strong>${s.attendance}</strong><span>Attendance Records</span></div></div><div class="section grid2"><div class="card"><h2>Quick actions</h2><button class="btn accent" onclick="openMember()">+ Add Member</button> <button class="btn" onclick="openGroup()">+ Add Group</button> <button class="btn light" onclick="openCompetition()">+ Competition</button></div><div class="card"><h2>Attendance overview</h2><p>Present: <b>${s.present}</b></p><p>Late: <b>${s.late}</b></p><p>Overall records: <b>${s.attendance}</b></p></div></div>`}
-async function membersPage(){let u=await api('/members');main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN</div><h1>Member Management</h1><button class="btn accent" onclick="openMember()">+ Add Member</button></div><div class="card tablewrap"><table class="table"><tr><th>Name</th><th>Email</th><th>Groups</th><th>Actions</th></tr>${u.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.email)}</td><td>${x.groups.map(g=>esc(g.name)).join(', ')}</td><td><button class="btn light" onclick="editMember(${x.id})">Edit</button> <button class="btn danger" onclick="removeMember(${x.id})">Remove</button></td></tr>`).join('')}</table></div>`}
-async function groupsPage(){let g=await api('/groups');main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN</div><h1>Group Management</h1><button class="btn accent" onclick="openGroup()">+ New Group</button></div><div class="grid">${g.map(x=>`<div class="card"><div class="avatar">${esc(x.name[0])}</div><h2>${esc(x.name)}</h2><p>${esc(x.description||'')}</p><p><b>Leader:</b> ${esc(x.leader_name||'Not assigned')}</p><button class="btn light" onclick="editGroup(${x.id})">Edit</button> <button class="btn danger" onclick="removeGroup(${x.id})">Delete</button></div>`).join('')}</div>`}
-async function attendancePage(){main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN</div><h1>Attendance Reports</h1><p class="muted">Mark daily attendance and see member percentages.</p></div><div class="card"><label class="field">Date<input id="attDate" type="date" value="${new Date().toISOString().slice(0,10)}" onchange="renderAttendanceTable()"></label><div id="attTable"></div></div>`;renderAttendanceTable()}
-async function renderAttendanceTable(){try{let date=attDate.value,x=await api('/attendance?date='+date);attTable.innerHTML=x.groups.map(g=>`<h2>${esc(g.name)}</h2><div class="tablewrap"><table class="table"><tr><th>Member</th><th>Status</th><th>Attendance %</th></tr>${g.members.map(u=>`<tr><td>${esc(u.name)}</td><td><select onchange="setAttendance(${u.id},${g.id},'${date}',this.value)"><option value="present" ${u.today==='present'?'selected':''}>Present</option><option value="late" ${u.today==='late'?'selected':''}>Late</option><option value="absent" ${u.today==='absent'?'selected':''}>Absent</option></select></td><td><span class="pill ${u.percent>=75?'green':u.percent>=50?'yellow':'red'}">${u.percent}%</span></td></tr>`).join('')}</table></div>`).join('')}catch(e){toast(e.message)}}
-async function setAttendance(uid,gid,date,status){await api('/attendance',{method:'POST',body:JSON.stringify({user_id:uid,group_id:gid,date,status})});renderAttendanceTable()}
+function eventsHtml(a){
+  return a.map(c=>`<div class="card event">
+    ${c.image_url?`<img src="${esc(c.image_url)}" alt="" style="width:100%;max-height:180px;object-fit:cover;border-radius:12px;margin-bottom:12px">`:''}
+    <div class="date">${esc(String(c.date||'').slice(5))}<br><small>${esc(c.time||'')}</small></div>
+    <div style="flex:1">
+      <h3>${esc(c.title)}</h3><p>${esc(c.description||'')}</p>
+      <small>📍 ${esc(c.venue||'')}</small>
+      <div style="margin-top:10px"><span class="pill">${esc(c.status||'upcoming')}</span> <span class="pill">${c.registration_count||0}${c.max_participants?'/'+c.max_participants:''} registered</span></div>
+      ${c.registration_deadline?`<small>Registration deadline: ${esc(c.registration_deadline)}</small><br>`:''}
+      ${c.attachment_url?`<a href="${esc(c.attachment_url)}" target="_blank" rel="noopener">📄 Competition document</a><br>`:''}
+      ${current.role!=='admin'?(c.registered?`<button class="btn light" onclick="unregisterCompetition(${c.id})">Cancel registration</button>`:`<button class="btn accent" onclick="registerCompetition(${c.id})">Register</button>`):''}
+      ${current.role==='admin'?`<button class="btn light" onclick="openCompetition(${c.id})">Edit</button> <button class="btn light" onclick="showParticipants(${c.id})">Participants</button> <button class="btn light" onclick="openResult(${c.id})">Result</button> <button class="btn danger" onclick="removeCompetition(${c.id})">Delete</button>`:''}
+    </div>
+  </div>`).join('')||'<div class="card">No competitions yet.</div>'
+}
 async function eventsPage(){let e=await api('/competitions');main.innerHTML=`<div class="hero"><div class="eyebrow">PIN BOARD</div><h1>Competitions</h1>${current.role==='admin'?'<button class="btn accent" onclick="openCompetition()">+ Add Competition</button>':''}</div><div class="grid2">${eventsHtml(e)}</div>`}
-async function calendarPage(){let e=await api('/competitions');main.innerHTML=`<div class="hero"><div class="eyebrow">EVENTS</div><h1>Competition Calendar</h1></div><div class="calendar">${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(x=>`<div class="day"><b>${x}</b></div>`).join('')}${Array.from({length:31},(_,i)=>{let d='2026-08-'+String(i+1).padStart(2,'0'),ev=e.filter(c=>c.date===d);return `<div class="day"><b>${i+1}</b>${ev.map(c=>`<div class="pill">${esc(c.title)}</div>`).join('')}</div>`}).join('')}</div>`}
+async function adminPage(){let s=await api('/dashboard');main.innerHTML=`<div class="hero"><div class="eyebrow">CONTROL CENTER</div><h1>Admin Dashboard</h1><p class="muted">You control members, groups, attendance, competitions, announcements and permissions.</p></div><div class="grid"><div class="card stat"><strong>${s.memberCount}</strong><span>Members</span></div><div class="card stat"><strong>${s.groupCount}</strong><span>Groups</span></div><div class="card stat"><strong>${s.attendance}</strong><span>Attendance Records</span></div></div><div class="section grid2"><div class="card"><h2>Quick actions</h2><button class="btn accent" onclick="openMember()">+ Add Member</button> <button class="btn" onclick="openGroup()">+ Add Group</button> <button class="btn light" onclick="openCompetition()">+ Competition</button></div><div class="card"><h2>Attendance overview</h2><p>Present: <b>${s.present}</b></p><p>Late: <b>${s.late}</b></p><p>Overall records: <b>${s.attendance}</b></p></div></div>`}
+async function membersPage(){
+  let u=await api('/members');
+  main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN · PEOPLE</div><h1>Member Management</h1><p class="muted">Create members, update their details, assign groups and keep the team directory clean.</p><div class="hero-actions"><button class="btn accent" onclick="openMember()">＋ New Member</button><button class="btn light" onclick="showPage('groups')">Manage Groups</button></div></div>
+  <div class="card"><div class="toolbar"><input class="search" id="memberSearch" placeholder="Search name, email or group…" oninput="filterMembers()"><span class="pill">${u.length} members</span></div><div class="tablewrap"><table class="table"><thead><tr><th>Member</th><th>Groups</th><th>Actions</th></tr></thead><tbody id="memberRows">${memberRows(u)}</tbody></table></div></div>`;
+  window.memberData=u;
+}
+function memberRows(u){return u.map(x=>`<tr data-search="${esc((x.name+' '+x.email+' '+x.groups.map(g=>g.name).join(' ')).toLowerCase())}"><td><div class="member-card"><div class="member-avatar">${esc((x.name||'?')[0].toUpperCase())}</div><div class="member-meta"><strong>${esc(x.name)}</strong><small>${esc(x.email)}</small></div></div></td><td>${x.groups.length?x.groups.map(g=>`<span class="pill">${esc(g.name)}</span>`).join(' '):'<span class="muted">No group</span>'}</td><td><div class="action-row"><button class="btn light sm" onclick="editMember(${x.id})">Edit</button><button class="btn danger sm" onclick="removeMember(${x.id})">Remove</button></div></td></tr>`).join('')||'<tr><td colspan=3>No members found.</td></tr>'}
+function filterMembers(){let q=(memberSearch.value||'').toLowerCase();document.querySelectorAll('#memberRows tr[data-search]').forEach(r=>r.style.display=r.dataset.search.includes(q)?'':'none')}
+
+async function groupsPage(){let g=await api('/groups');main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN</div><h1>Group Management</h1><button class="btn accent" onclick="openGroup()">+ New Group</button></div><div class="grid">${g.map(x=>`<div class="card"><div class="avatar">${esc(x.name[0])}</div><h2>${esc(x.name)}</h2><p>${esc(x.description||'')}</p><p><b>Leader:</b> ${esc(x.leader_name||'Not assigned')}</p><button class="btn light" onclick="editGroup(${x.id})">Edit</button> <button class="btn danger" onclick="removeGroup(${x.id})">Delete</button></div>`).join('')}</div>`}
+async function attendancePage(){
+  const today=localDateISO();
+  main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN · DAILY OPERATIONS</div><h1>Attendance</h1><p class="muted">Select a group, mark everyone in seconds, then save once. No dropdown hunting.</p></div>
+  <div class="card"><div class="toolbar"><label class="field" style="margin:0;min-width:180px">Date<input id="attDate" type="date" value="${today}" onchange="loadAttendance()"></label><div class="action-row"><button class="btn success sm" onclick="bulkAttendance('present')">✓ All Present</button><button class="btn warn sm" onclick="bulkAttendance('late')">◷ All Late</button><button class="btn danger sm" onclick="bulkAttendance('absent')">× All Absent</button></div></div><div id="attendanceContent" style="margin-top:16px"></div></div>`;
+  await loadAttendance();
+}
+function localDateISO(){const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)}
+async function loadAttendance(){try{const x=await api('/attendance?date='+attDate.value);window.attendanceData=x;window.activeAttendanceGroup=window.activeAttendanceGroup||x.groups[0]?.id;renderAttendance();}catch(e){toast(e.message)}}
+function renderAttendance(){const groups=window.attendanceData?.groups||[];if(!groups.length){attendanceContent.innerHTML='<div class="notice">No groups or members have been created yet.</div>';return}if(!groups.some(g=>g.id===window.activeAttendanceGroup))window.activeAttendanceGroup=groups[0].id;const g=groups.find(g=>g.id===window.activeAttendanceGroup);attendanceContent.innerHTML=`<div class="attendance-shell"><div class="group-tabs">${groups.map(x=>`<button class="group-tab ${x.id===g.id?'active':''}" onclick="selectAttendanceGroup(${x.id})"><b>${esc(x.name)}</b><br><small>${x.members.length} members</small></button>`).join('')}</div><div><div class="att-toolbar"><div><h2 style="margin:0">${esc(g.name)}</h2><small class="muted">${attDate.value}</small></div><button class="btn accent" onclick="saveAttendance()">Save attendance</button></div><div style="margin-top:8px">${g.members.map(u=>attendanceRow(u,g.id)).join('')||'<div class="notice">No members in this group.</div>'}</div></div></div>`}
+function attendanceRow(u,gid){const st=u.today||'present';return `<div class="att-row" data-att-user="${u.id}" data-att-group="${gid}"><div><b>${esc(u.name)}</b></div><div class="att-buttons"><button class="att-btn ${st==='present'?'active present':''}" onclick="chooseAttendance(${u.id},${gid},'present')">✓ Present</button><button class="att-btn ${st==='late'?'active late':''}" onclick="chooseAttendance(${u.id},${gid},'late')">◷ Late</button><button class="att-btn ${st==='absent'?'active absent':''}" onclick="chooseAttendance(${u.id},${gid},'absent')">× Absent</button></div><div class="percent"><span class="pill ${u.percent>=75?'green':u.percent>=50?'yellow':'red'}">${u.percent}%</span></div></div>`}
+function selectAttendanceGroup(id){window.activeAttendanceGroup=id;renderAttendance()}
+function chooseAttendance(uid,gid,status){const row=document.querySelector(`[data-att-user="${uid}"][data-att-group="${gid}"]`);if(!row)return;row.querySelectorAll('.att-btn').forEach(b=>b.classList.remove('active','present','late','absent'));const cls=status;row.querySelector(`.att-btn:nth-child(${status==='present'?1:status==='late'?2:3})`).classList.add('active',cls);row.dataset.status=status}
+function bulkAttendance(status){const g=window.attendanceData?.groups?.find(g=>g.id===window.activeAttendanceGroup);if(!g)return;g.members.forEach(u=>chooseAttendance(u.id,g.id,status));toast(`Marked ${status} for ${g.members.length} members. Click Save attendance.`)}
+async function saveAttendance(){const g=window.attendanceData?.groups?.find(g=>g.id===window.activeAttendanceGroup);if(!g)return;const rows=[...document.querySelectorAll(`[data-att-group="${g.id}"]`)];const records=rows.map(r=>({user_id:+r.dataset.attUser,group_id:+r.dataset.attGroup,date:attDate.value,status:r.dataset.status||g.members.find(u=>u.id===+r.dataset.attUser)?.today||'present'}));try{await api('/attendance/bulk',{method:'POST',body:JSON.stringify({records})});toast('Attendance saved');await loadAttendance()}catch(e){toast(e.message)}}
+async function eventsPage(){let e=await api('/competitions');main.innerHTML=`<div class="hero"><div class="eyebrow">PIN BOARD</div><h1>Competitions</h1>${current.role==='admin'?'<button class="btn accent" onclick="openCompetition()">+ Add Competition</button>':''}</div><div class="grid2">${eventsHtml(e)}</div>`}
+async function calendarPage(){
+  const e=await api('/competitions');
+  const startYear=new Date().getFullYear();
+  const years=[startYear,startYear+1];
+  const week=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const monthHtml=(year,month)=>{const first=new Date(year,month,1),days=new Date(year,month+1,0).getDate(),offset=first.getDay();let cells='';for(let i=0;i<offset;i++)cells+='<div class="month-day empty"></div>';for(let d=1;d<=days;d++){const iso=`${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`,events=e.filter(c=>String(c.date).slice(0,10)===iso);cells+=`<div class="month-day ${events.length?'has-event':''}" title="${events.map(c=>esc(c.title)).join(' · ')}"><b>${d}</b>${events.length?'<span class="event-dot"></span>':''}</div>`}return `<div class="month-card"><div class="month-title">${monthNames[month]}</div><div class="month-week">${week.map(x=>`<span>${x[0]}</span>`).join('')}${cells}</div></div>`};
+  main.innerHTML=`<div class="hero"><div class="eyebrow">EVENTS · 24 MONTH VIEW</div><h1>Competition Calendar</h1><p class="muted">A complete two-year view so you can plan competitions without switching between months.</p><div class="calendar-legend"><span>● Competition scheduled</span><span>Today: ${localDateISO()}</span></div></div>${years.map(y=>`<section class="calendar-year"><h2>${y}<span class="pill">12 months</span></h2><div class="months-grid">${Array.from({length:12},(_,m)=>monthHtml(y,m)).join('')}</div></section>`).join('')}`;
+}
 async function announcementPage(){
   let a=await api('/announcements');
-  main.innerHTML=`<div class="hero">
-    <div class="eyebrow">TEAM NEWS</div>
-    <h1>Announcements</h1>
-    ${current.role==='admin'?'<button class="btn accent" onclick="openAnnouncement()">+ New Announcement</button>':''}
-  </div>
+  main.innerHTML=`<div class="hero"><div class="eyebrow">TEAM NEWS</div><h1>Announcements</h1>${current.role==='admin'?'<button class="btn accent" onclick="openAnnouncement()">+ New Announcement</button>':''}</div>
   ${a.map(x=>`<div class="card notice">
-    <h3>${esc(x.title)}</h3>
-    <p>${esc(x.text)}</p>
-    <small>${esc(x.date||'')}</small>
-    ${current.role==='admin'?`<div style="margin-top:12px;display:flex;gap:8px">
-      <button class="btn light" onclick="editAnnouncement(${x.id})">✏️ Edit</button>
-      <button class="btn danger" onclick="deleteAnnouncement(${x.id})">🗑 Delete</button>
-    </div>`:''}
-  </div>`).join('')||'<div class="card">No announcements yet.</div>'}`;
+    <div style="display:flex;justify-content:space-between;gap:10px"><h3>${x.pinned?'📌 ':''}${esc(x.title)}</h3><span class="pill ${x.priority==='urgent'?'red':x.priority==='high'?'yellow':''}">${esc(x.priority||'normal')}</span></div>
+    <p>${esc(x.text)}</p><small>${esc(x.date||x.created_at||'')}</small>
+    ${x.attachment_url?`<br><a href="${esc(x.attachment_url)}" target="_blank" rel="noopener">📎 Attachment</a>`:''}
+    ${!x.is_read?`<br><button class="btn light" onclick="markAnnouncementRead(${x.id})">Mark as read</button>`:'<br><span class="pill green">Read</span>'}
+    ${current.role==='admin'?`<br><button class="btn light" onclick="openAnnouncement(${x.id})">Edit</button> <button class="btn danger" onclick="removeAnnouncement(${x.id})">Delete</button>`:''}
+  </div>`).join('')||'<div class="card">No announcements yet.</div>'}`
 }
 async function profilePage(){let x=await api('/profile');main.innerHTML=`<div class="hero"><div class="eyebrow">MY PROFILE</div><h1>${esc(x.name)}</h1><p class="muted">${esc(x.email)}</p></div><div class="grid2"><div class="card"><h2>Personal Profile</h2><p><b>Name:</b> ${esc(x.name)}</p><p><b>Email:</b> ${esc(x.email)}</p><p><b>Role:</b> ${x.role}</p></div><div class="card"><h2>My Attendance</h2><div class="stat"><strong>${x.percent}%</strong><span>Overall attendance</span></div><p>Present/Late: ${x.good} · Absent: ${x.absent}</p></div></div><div class="section card"><h2>My Groups</h2>${x.groups.map(g=>`<span class="pill">${esc(g.name)}</span>`).join(' ')}</div><div class="section card"><h2>Files</h2><input id="fileUpload" type="file"><button class="btn accent" onclick="uploadFile()">Upload file</button><div id="uploadResult"></div></div><div class="section card"><h2>Attendance History</h2>${x.records.map(a=>`<div class="row"><span>${a.date} · ${esc(a.group_name)}</span><span class="pill ${a.status==='present'?'green':a.status==='late'?'yellow':'red'}">${a.status}</span></div>`).join('')||'No attendance recorded.'}</div>`}
 async function uploadFile(){const f=fileUpload.files[0];if(!f)return toast('Choose a file first');const fd=new FormData();fd.append('file',f);try{const r=await fetch(API+'/upload',{method:'POST',headers:{Authorization:'Bearer '+token},body:fd});const x=await r.json();if(!r.ok)throw Error(x.error||'Upload failed');uploadResult.innerHTML=`<div class="notice">Uploaded: <a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name)}</a></div>`;toast('File uploaded to Supabase Storage')}catch(e){toast(e.message)}}
 async function chatPage(gid){let g=(await api('/groups')).find(x=>x.id===+gid);main.innerHTML=`<div class="hero"><div class="eyebrow">GROUP CHAT</div><h1>${esc(g.name)} 💬</h1><p class="muted">${esc(g.description||'')}</p></div><div class="card chat"><div id="chatMessages" class="messages"></div><div class="composer"><input id="chatInput" placeholder="Message the ${esc(g.name)} group..."><button class="btn accent" onclick="sendMessage(${gid})">Send</button></div></div>`;renderMessages(gid)}
 async function renderMessages(gid){let m=await api('/groups/'+gid+'/messages');chatMessages.innerHTML=m.map(x=>`<div class="msg"><b>${esc(x.user_name)}</b><small>${new Date(x.created_at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</small><div>${esc(x.text)}</div></div>`).join('');chatMessages.scrollTop=chatMessages.scrollHeight}
 async function sendMessage(gid){let text=chatInput.value.trim();if(!text)return;await api('/groups/'+gid+'/messages',{method:'POST',body:JSON.stringify({text})});chatInput.value='';renderMessages(gid)}
-function closeModal(){modal.classList.add('hidden')}
-async function openMember(id=null){let groups=await api('/groups');modalBody.innerHTML=`<h2>${id?'Edit':'Add'} Member</h2><div class="field">Name<input id="mName"></div><div class="field">Email<input id="mEmail" type="email"></div><div class="field">Password<input id="mPass" value="Member@123"></div><div class="field">Groups<select id="mGroups" multiple>${groups.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join('')}</select></div><button class="btn accent" onclick="saveMember(${id||0})">Save</button>`;if(id){let u=(await api('/members')).find(x=>x.id===id);mName.value=u.name;mEmail.value=u.email;[...mGroups.options].forEach(o=>o.selected=u.groups.some(g=>g.id===+o.value))}modal.classList.remove('hidden')}
+function closeModal(){modal.classList.add('hidden');modalCard.classList.remove('wide')}
+async function openMember(id=null){
+  const groups=await api('/groups');
+  modalCard.classList.add('wide');
+  modalBody.innerHTML=`<h2 style="margin-top:0">${id?'Edit member':'Create new member'}</h2><p class="muted">${id?'Update the member profile and group assignments.':'Add a member to the team and optionally assign their groups now.'}</p><div class="competition-form"><label class="field">Full name<input id="mName" autocomplete="name" placeholder="e.g. Aditi Sharma" required></label><label class="field">Email address<input id="mEmail" type="email" autocomplete="email" placeholder="name@example.com" required></label><label class="field">${id?'New password (optional)':'Password'}<input id="mPass" type="password" placeholder="${id?'Leave blank to keep current password':'Member@123'}" ${id?'':'value="Member@123"'}></label><label class="field">Groups<select id="mGroups" multiple size="5">${groups.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join('')}</select></label></div><div class="notice">Tip: Hold Ctrl/Cmd to select multiple groups.</div><div class="action-row"><button class="btn light" onclick="closeModal()">Cancel</button><button class="btn accent" onclick="saveMember(${id||0})">${id?'Save changes':'Create member'}</button></div>`;
+  if(id){const u=(await api('/members')).find(x=>x.id===id);if(!u)throw Error('Member not found');mName.value=u.name;mEmail.value=u.email;[...mGroups.options].forEach(o=>o.selected=u.groups.some(g=>g.id===+o.value))}
+  modal.classList.remove('hidden');
+}
 async function saveMember(id){let groups=[...mGroups.selectedOptions].map(o=>+o.value);await api(id?'/members/'+id:'/members',{method:id?'PUT':'POST',body:JSON.stringify({name:mName.value,email:mEmail.value,password:mPass.value,groups})});closeModal();showPage('members')}
 function editMember(id){openMember(id)}async function removeMember(id){if(confirm('Remove this member?')){await api('/members/'+id,{method:'DELETE'});showPage('members')}}
 async function openGroup(id=null){let users=await api('/members');modalBody.innerHTML=`<h2>${id?'Edit':'Create'} Group</h2><div class="field">Name<input id="gName"></div><div class="field">Description<textarea id="gDesc"></textarea></div><div class="field">Team leader<select id="gLeader"><option value="">None</option>${users.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('')}</select></div><button class="btn accent" onclick="saveGroup(${id||0})">Save</button>`;if(id){let g=(await api('/groups')).find(x=>x.id===id);gName.value=g.name;gDesc.value=g.description||'';gLeader.value=g.leader_id||''}modal.classList.remove('hidden')}
 async function saveGroup(id){await api(id?'/groups/'+id:'/groups',{method:id?'PUT':'POST',body:JSON.stringify({name:gName.value,description:gDesc.value,leader_id:gLeader.value||null})});closeModal();buildSidebar();showPage('groups')}
 function editGroup(id){openGroup(id)}async function removeGroup(id){if(confirm('Delete this group?')){await api('/groups/'+id,{method:'DELETE'});buildSidebar();showPage('groups')}}
-function openCompetition(){modalBody.innerHTML=`<h2>Add Competition</h2><div class="field">Title<input id="cTitle"></div><div class="field">Date<input id="cDate" type="date"></div><div class="field">Time<input id="cTime" type="time"></div><div class="field">Venue<input id="cVenue"></div><div class="field">Description<textarea id="cDesc"></textarea></div><div class="field">Document URL (optional)<input id="cDoc" placeholder="https://..."></div><button class="btn accent" onclick="saveCompetition()">Publish</button>`;modal.classList.remove('hidden')}
-async function saveCompetition(){await api('/competitions',{method:'POST',body:JSON.stringify({title:cTitle.value,date:cDate.value,time:cTime.value,venue:cVenue.value,description:cDesc.value,document_url:cDoc.value})});closeModal();showPage('events')}
-function openAnnouncement(){
-  modalBody.innerHTML=`<h2>New Announcement</h2>
-    <div class="field">Title<input id="aTitle"></div>
-    <div class="field">Message<textarea id="aText"></textarea></div>
-    <div class="field">Priority<select id="aPriority">
-      <option value="normal">Normal</option>
-      <option value="high">High</option>
-      <option value="urgent">Urgent</option>
-    </select></div>
-    <div class="field"><label><input id="aPinned" type="checkbox"> Pin announcement</label></div>
-    <button class="btn accent" onclick="saveAnnouncement()">Publish</button>`;
+async function uploadPickedFile(inputId){
+  const f=document.getElementById(inputId)?.files?.[0]; if(!f)return null;
+  const fd=new FormData();fd.append('file',f);
+  const r=await fetch(API+'/upload',{method:'POST',headers:{Authorization:'Bearer '+token},body:fd});
+  const x=await r.json().catch(()=>({})); if(!r.ok)throw Error(x.error||'Upload failed'); return x.path;
+}
+async function openCompetition(id=null){
+  const list=await api('/competitions');let item=id?list.find(x=>x.id===id):null;if(id&&!item)throw Error('Competition not found.');
+  modalCard.classList.add('wide');
+  modalBody.innerHTML=`<h2 style="margin-top:0">${id?'Edit competition':'Create competition'}</h2><p class="muted">All competition details can be updated later, including completed competitions.</p><div class="competition-form"><label class="field">Title<input id="cTitle" value="${esc(item?.title||'')}" required></label><label class="field">Date<input id="cDate" type="date" value="${esc(String(item?.date||'').slice(0,10))}" required></label><label class="field">Time<input id="cTime" type="time" value="${esc(String(item?.time||'').slice(0,5))}"></label><label class="field">Venue<input id="cVenue" value="${esc(item?.venue||'')}"></label><label class="field full-field">Description<textarea id="cDesc" rows="4">${esc(item?.description||'')}</textarea></label><label class="field">Registration deadline<input id="cDeadline" type="date" value="${esc(String(item?.registration_deadline||'').slice(0,10))}"></label><label class="field">Maximum participants<input id="cMax" type="number" min="1" value="${esc(item?.max_participants||'')}"></label><label class="field">Status<select id="cStatus"><option value="upcoming">Upcoming</option><option value="closed">Closed</option><option value="completed">Completed</option></select></label><label class="field">Document URL<input id="cDoc" value="${esc(item?.document_url||'')}"></label><label class="field">Replace document<input id="cFile" type="file" accept=".pdf,.doc,.docx,image/*"></label><label class="field">Replace competition image<input id="cImage" type="file" accept="image/*"></label></div><div class="action-row"><button class="btn light" onclick="closeModal()">Cancel</button><button class="btn accent" onclick="saveCompetition(${id||0})">${id?'Save changes':'Publish competition'}</button></div>`;
+  cStatus.value=item?.status||'upcoming';modal.classList.remove('hidden');
+}
+async function saveCompetition(id){
+  try{const old=id?(await api('/competitions')).find(x=>x.id===id):null;const document_path=await uploadPickedFile('cFile')||old?.document_path||null;const image_path=await uploadPickedFile('cImage')||old?.image_path||null;if(!cTitle.value.trim()||!cDate.value)throw Error('Competition title and date are required.');await api(id?'/competitions/'+id:'/competitions',{method:id?'PUT':'POST',body:JSON.stringify({title:cTitle.value.trim(),date:cDate.value,time:cTime.value||null,venue:cVenue.value.trim(),description:cDesc.value.trim(),registration_deadline:cDeadline.value||null,max_participants:cMax.value?+cMax.value:null,status:cStatus.value,document_url:cDoc.value.trim(),document_path,image_path,result:old?.result||'',winner:old?.winner||''})});closeModal();toast(id?'Competition updated':'Competition published');showPage('events')}catch(e){toast(e.message)}}
+async function registerCompetition(id){await api('/competitions/'+id+'/register',{method:'POST'});toast('Registered successfully');showPage('events')}
+async function unregisterCompetition(id){await api('/competitions/'+id+'/register',{method:'DELETE'});toast('Registration cancelled');showPage('events')}
+async function removeCompetition(id){if(confirm('Delete this competition?')){await api('/competitions/'+id,{method:'DELETE'});showPage('events')}}
+async function showParticipants(id){
+  const p=await api('/competitions/'+id+'/participants');
+  modalBody.innerHTML=`<h2>Participants</h2>${p.map(x=>`<div class="row"><span>${esc(x.name)}</span><small>${esc(x.email)}</small></div>`).join('')||'No registrations yet.'}`;
   modal.classList.remove('hidden');
 }
-async function saveAnnouncement(){
-  try{
-    await api('/announcements',{
-      method:'POST',
-      body:JSON.stringify({title:aTitle.value,text:aText.value,priority:aPriority.value,pinned:aPinned.checked})
-    });
-    closeModal();await showPage('announcements');toast('Announcement published');
-  }catch(e){toast(e.message)}
+async function openResult(id){
+  const item=(await api('/competitions')).find(x=>x.id===id);
+  modalBody.innerHTML=`<h2>Competition Result</h2><div class="field">Result<textarea id="rResult">${esc(item?.result||'')}</textarea></div><div class="field">Winner<input id="rWinner" value="${esc(item?.winner||'')}"></div><div class="field">Status<select id="rStatus"><option value="completed">Completed</option><option value="closed">Closed</option></select></div><button class="btn accent" onclick="saveResult(${id})">Save result</button>`;
+  rStatus.value=item?.status==='closed'?'closed':'completed';modal.classList.remove('hidden');
 }
-async function editAnnouncement(id){
-  try{
-    let a=(await api('/announcements')).find(x=>+x.id===+id);
-    if(!a){toast('Announcement not found');return}
-    modalBody.innerHTML=`<h2>Edit Announcement</h2>
-      <div class="field">Title<input id="aTitle" value="${esc(a.title||'')}"></div>
-      <div class="field">Message<textarea id="aText">${esc(a.text||'')}</textarea></div>
-      <div class="field">Priority<select id="aPriority">
-        <option value="normal" ${a.priority==='normal'||!a.priority?'selected':''}>Normal</option>
-        <option value="high" ${a.priority==='high'?'selected':''}>High</option>
-        <option value="urgent" ${a.priority==='urgent'?'selected':''}>Urgent</option>
-      </select></div>
-      <div class="field"><label><input id="aPinned" type="checkbox" ${a.pinned?'checked':''}> Pin announcement</label></div>
-      <button class="btn accent" onclick="saveAnnouncementEdit(${a.id})">Save changes</button>`;
-    modal.classList.remove('hidden');
-  }catch(e){toast(e.message)}
+async function saveResult(id){await api('/competitions/'+id+'/result',{method:'PATCH',body:JSON.stringify({result:rResult.value,winner:rWinner.value,status:rStatus.value})});closeModal();showPage('events')}
+async function openAnnouncement(id=null){
+  let item=id?(await api('/announcements')).find(x=>x.id===id):null;
+  modalBody.innerHTML=`<h2>${id?'Edit':'New'} Announcement</h2>
+  <div class="field">Title<input id="aTitle" value="${esc(item?.title||'')}"></div>
+  <div class="field">Message<textarea id="aText">${esc(item?.text||'')}</textarea></div>
+  <div class="field">Priority<select id="aPriority"><option value="normal">Normal</option><option value="high">High</option><option value="urgent">Urgent</option></select></div>
+  <label class="field"><input id="aPinned" type="checkbox" ${item?.pinned?'checked':''}> Pin announcement</label>
+  <div class="field">Attachment<input id="aFile" type="file" accept=".pdf,.doc,.docx,image/*"></div>
+  <button class="btn accent" onclick="saveAnnouncement(${id||0})">${id?'Save changes':'Publish'}</button>`;
+  if(item)aPriority.value=item.priority||'normal'; modal.classList.remove('hidden');
 }
-async function saveAnnouncementEdit(id){
-  try{
-    await api('/announcements/'+id,{
-      method:'PUT',
-      body:JSON.stringify({title:aTitle.value,text:aText.value,priority:aPriority.value,pinned:aPinned.checked})
-    });
-    closeModal();await showPage('announcements');toast('Announcement updated');
-  }catch(e){toast(e.message)}
+async function saveAnnouncement(id){
+  const old=id?(await api('/announcements')).find(x=>x.id===id):null;
+  const attachment_path=await uploadPickedFile('aFile')||old?.attachment_path||null;
+  await api(id?'/announcements/'+id:'/announcements',{method:id?'PUT':'POST',body:JSON.stringify({
+    title:aTitle.value,text:aText.value,priority:aPriority.value,pinned:aPinned.checked,attachment_path
+  })});
+  closeModal();showPage('announcements');
 }
-async function deleteAnnouncement(id){
-  if(!confirm('Delete this announcement?'))return;
-  try{
-    await api('/announcements/'+id,{method:'DELETE'});
-    await showPage('announcements');toast('Announcement deleted');
-  }catch(e){toast(e.message)}
-}
+async function markAnnouncementRead(id){await api('/announcements/'+id+'/read',{method:'POST'});showPage('announcements')}
+async function removeAnnouncement(id){if(confirm('Delete this announcement?')){await api('/announcements/'+id,{method:'DELETE'});showPage('announcements')}}
 boot();
 </script>
 </body></html>
