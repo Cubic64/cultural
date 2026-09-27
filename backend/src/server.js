@@ -179,9 +179,8 @@ app.get('/api/competitions',auth,async(req,res)=>{
         (SELECT count(*) FROM competition_registrations cr WHERE cr.competition_id=c.id)::int AS registration_count,
         EXISTS(SELECT 1 FROM competition_registrations cr WHERE cr.competition_id=c.id AND cr.user_id=$1) AS registered
       FROM competitions c
-      WHERE ($2::boolean = true OR c.date>=CURRENT_DATE)
       ORDER BY c.date,c.time NULLS LAST,c.id
-    `,[req.user.id, req.user.role==='admin']);
+    `,[req.user.id]);
     for(const c of rows){
       c.attachment_url=await signedStorageUrl(c.document_path);
       c.image_url=await signedStorageUrl(c.image_path);
