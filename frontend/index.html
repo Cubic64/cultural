@@ -4,51 +4,100 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Cultura — Cultural Team Portal</title>
+<link rel="icon" type="image/x-icon" href="../source/icon.png">
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f5f1e9;color:#211f1c}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink)}
 button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .login{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at top,#8d3d28 0,#35231c 45%,#171411 100%)}
-.login-card{width:min(430px,100%);background:#fffdf9;border-radius:24px;padding:38px;box-shadow:0 25px 80px #0007}.logo{font-weight:800;letter-spacing:4px}.logo span{color:#9a432c}
-.login h1{font-family:Georgia,serif;font-size:42px;margin:28px 0 8px}.muted{color:#817a72}.field{display:grid;gap:7px;margin:14px 0}
-.field input,.field select,.field textarea,.search{width:100%;border:1px solid #ddd4c8;background:#fff;padding:12px;border-radius:10px}.btn{border:0;border-radius:10px;padding:12px 17px;background:#211f1c;color:white;font-weight:700}
-.btn.accent{background:#93432c}.btn.light{background:#eee5d8;color:#211f1c}.btn.danger{background:#9b352c}.full{width:100%}.demo{background:#f2e9dd;padding:12px;border-radius:10px;font-size:13px;margin-top:15px}
-.app{min-height:100vh}.top{height:72px;background:#fffdf9;border-bottom:1px solid #e1d8cb;display:flex;align-items:center;justify-content:space-between;padding:0 4%;position:sticky;top:0;z-index:20}.top nav{display:flex;gap:8px;align-items:center}
-.top nav button{border:0;background:transparent;padding:10px;border-radius:9px}.top nav button:hover{background:#eee5d8}.avatar{width:38px;height:38px;border-radius:50%;background:#93432c;color:white;display:grid;place-items:center;font-weight:800}
-.shell{display:flex;max-width:1400px;margin:auto}.side{width:245px;padding:22px 15px;min-height:calc(100vh - 72px);border-right:1px solid #e1d8cb}.side button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:12px;border-radius:10px;margin:3px 0}
-.side button:hover{background:#e9dfd1}.main{flex:1;padding:35px;min-width:0}.hero h1{font:700 clamp(38px,5vw,62px) Georgia,serif;margin:0 0 10px}.eyebrow{font-size:11px;letter-spacing:2px;color:#93432c;font-weight:800}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.card{background:#fffdf9;border:1px solid #e1d8cb;border-radius:18px;padding:20px}
-.stat strong{font:700 38px Georgia,serif;display:block}.stat span{color:#817a72}.section{margin-top:28px}.section h2{font:600 30px Georgia,serif}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #e7ded3;padding:13px 0}.pill{display:inline-block;padding:5px 9px;border-radius:99px;background:#eee5d8;font-size:12px}
-.green{background:#dcebdc;color:#2d6737}.red{background:#f2d9d5;color:#8e3028}.yellow{background:#f5e8bf;color:#795b15}.event{display:flex;gap:15px}.date{min-width:62px;text-align:center;background:#f0e3d4;border-radius:12px;padding:10px;font-weight:800}
-.chat{height:65vh;display:flex;flex-direction:column}.messages{flex:1;overflow:auto;padding:10px}.msg{padding:11px 0;border-bottom:1px solid #e8dfd5}.msg small{color:#888;margin-left:8px}.composer{display:flex;gap:8px;border-top:1px solid #e2d9cd;padding-top:12px}.composer input{flex:1}
-.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:12px;border-bottom:1px solid #e2d9cd;white-space:nowrap}
-.modal{position:fixed;inset:0;background:#0008;display:grid;place-items:center;z-index:50;padding:20px}.modal-card{background:#fffdf9;width:min(550px,100%);max-height:90vh;overflow:auto;border-radius:18px;padding:25px}.close{float:right;border:0;background:#eee;padding:7px 10px;border-radius:8px}
-.notice{padding:14px;border-radius:12px;background:#eee5d8;margin:10px 0}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.day{min-height:80px;background:#fffdf9;border:1px solid #e1d8cb;border-radius:8px;padding:8px;font-size:12px}
+.login-card{width:min(430px,100%);background:var(--paper);color:var(--ink);border-radius:24px;padding:38px;box-shadow:0 25px 80px #0007}.logo{font-weight:800;letter-spacing:4px}.logo span{color:#9a432c}
+.login h1{font-family:Georgia,serif;font-size:42px;margin:28px 0 8px}.muted{color:var(--muted)}.field{display:grid;gap:7px;margin:14px 0}
+.field input,.field select,.field textarea,.search{width:100%;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:12px;border-radius:10px}.btn{border:0;border-radius:10px;padding:12px 17px;background:#211f1c;color:white;font-weight:700}
+.btn.accent{background:#93432c}.btn.light{background:var(--soft);color:var(--ink)}.btn.danger{background:#9b352c}.full{width:100%}.demo{background:var(--soft);padding:12px;border-radius:10px;font-size:13px;margin-top:15px}
+.app{min-height:100vh}.top{height:72px;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 4%;position:sticky;top:0;z-index:20}.top nav{display:flex;gap:8px;align-items:center}
+.top nav button{border:0;background:transparent;padding:10px;border-radius:9px;color:var(--ink)}.top nav button:hover{background:var(--soft)}.avatar{width:38px;height:38px;border-radius:50%;background:#93432c;color:white;display:grid;place-items:center;font-weight:800}
+.shell{display:flex;max-width:1400px;margin:auto}.side{width:245px;padding:22px 15px;min-height:calc(100vh - 72px);border-right:1px solid var(--line)}.side button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:12px;border-radius:10px;margin:3px 0;color:var(--ink)}
+.side button:hover{background:var(--soft)}.main{flex:1;padding:35px;min-width:0}.hero h1{font:700 clamp(38px,5vw,62px) Georgia,serif;margin:0 0 10px}.eyebrow{font-size:11px;letter-spacing:2px;color:#93432c;font-weight:800}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.card{background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:18px;padding:20px}
+.stat strong{font:700 38px Georgia,serif;display:block}.stat span{color:var(--muted)}.section{margin-top:28px}.section h2{font:600 30px Georgia,serif}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:13px 0}.pill{display:inline-block;padding:5px 9px;border-radius:99px;background:var(--soft);font-size:12px}
+.green{background:#dcebdc;color:#2d6737}.red{background:#f2d9d5;color:#8e3028}.yellow{background:#f5e8bf;color:#795b15}.event{display:flex;gap:15px}.date{min-width:62px;text-align:center;background:#f0e3d4;color:#211f1c;border-radius:12px;padding:10px;font-weight:800}
+.chat{height:65vh;display:flex;flex-direction:column}.messages{flex:1;overflow:auto;padding:10px}.msg{padding:11px 0;border-bottom:1px solid var(--line)}.msg small{color:var(--muted);margin-left:8px}.composer{display:flex;gap:8px;border-top:1px solid var(--line);padding-top:12px}.composer input{flex:1}
+.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.modal{position:fixed;inset:0;background:#0008;display:grid;place-items:center;z-index:50;padding:20px}.modal-card{background:var(--paper);color:var(--ink);width:min(550px,100%);max-height:90vh;overflow:auto;border-radius:18px;padding:25px}.close{float:right;border:0;background:var(--soft);color:var(--ink);padding:7px 10px;border-radius:8px}
+.notice{padding:14px;border-radius:12px;background:var(--soft);margin:10px 0}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.day{min-height:80px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px;font-size:12px}
 .mobile-menu{display:none}@media(max-width:900px){.side{display:none}.main{padding:22px 16px}.grid,.grid2{grid-template-columns:1fr}.mobile-menu{display:block}.calendar{grid-template-columns:repeat(2,1fr)}}
 .toast{position:fixed;right:20px;bottom:20px;background:#211f1c;color:#fff;padding:14px 18px;border-radius:10px;z-index:100}
 
 /* --- Professional admin UI upgrade --- */
-:root{--ink:#211f1c;--muted:#817a72;--paper:#fffdf9;--line:#e1d8cb;--accent:#93432c;--accent2:#b86143;--soft:#f0e6d9}
-.top{box-shadow:0 2px 18px #00000008}.side{background:linear-gradient(180deg,#fffaf3,#f7efe4)}
+:root{--bg:#f5f1e9;--ink:#211f1c;--muted:#817a72;--paper:#fffdf9;--paper2:#faf5ee;--line:#e1d8cb;--accent:#93432c;--accent2:#b86143;--soft:#f0e6d9;--shadow:#4b392b0a}
+[data-theme="dark"]{--bg:#15130f;--ink:#efe9df;--muted:#a89d8e;--paper:#221e19;--paper2:#2a2520;--line:#3c352c;--accent:#c4694a;--accent2:#d98567;--soft:#332c24;--shadow:#0007}
+html{background:var(--bg)}
+body,.card,.modal-card,.login-card,.top,.doc-card{transition:background .2s,color .2s,border-color .2s}
+.theme-toggle{border:1px solid var(--line);background:var(--paper);border-radius:50%;width:38px;height:38px;display:grid;place-items:center;font-size:16px;padding:0}
+.top{box-shadow:0 2px 18px #00000008}.side{background:linear-gradient(180deg,var(--paper),var(--paper2))}
 .btn{transition:.18s transform,.18s box-shadow,.18s background}.btn:hover{transform:translateY(-1px);box-shadow:0 7px 18px #0002}.btn.sm{padding:8px 11px;font-size:13px}.btn.success{background:#3c7650}.btn.warn{background:#b47b19}
-.card{box-shadow:0 4px 18px #4b392b0a}.hero{margin-bottom:22px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}.toolbar .search{max-width:360px}.table th{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:#817a72;background:#faf5ee}.table tr:hover td{background:#fffaf3}.member-card{display:flex;align-items:center;gap:14px}.member-avatar{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#ead8ca;color:#7d3825;font-weight:800;font-size:17px}.member-meta{min-width:0}.member-meta strong{display:block}.member-meta small{color:#817a72;display:block;overflow:hidden;text-overflow:ellipsis}.action-row{display:flex;gap:7px;flex-wrap:wrap}.calendar-year{margin-top:22px}.calendar-year h2{display:flex;justify-content:space-between;align-items:center;margin:0 0 12px;font:600 28px Georgia,serif}.months-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.month-card{background:#fffdf9;border:1px solid #e1d8cb;border-radius:16px;padding:13px;box-shadow:0 4px 14px #00000008}.month-title{font-weight:800;margin-bottom:9px}.month-week{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.month-week span{font-size:9px;text-align:center;color:#8a8178;font-weight:800}.month-day{min-height:31px;border:1px solid transparent;border-radius:7px;padding:4px;font-size:10px;position:relative}.month-day.has-event{background:#f3e1d3;border-color:#e4c6b4}.month-day .event-dot{display:block;width:5px;height:5px;border-radius:50%;background:#93432c;margin-top:2px}.month-day.empty{visibility:hidden}.month-day:hover{border-color:#cfae9b}.calendar-legend{display:flex;gap:14px;align-items:center;color:#817a72;font-size:12px;margin-top:10px}.attendance-shell{display:grid;grid-template-columns:210px 1fr;gap:16px}.group-tabs{display:flex;flex-direction:column;gap:7px}.group-tab{border:1px solid var(--line);background:var(--paper);padding:12px;border-radius:11px;text-align:left}.group-tab.active{background:#93432c;color:#fff;border-color:#93432c}.att-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line)}.att-row{display:grid;grid-template-columns:minmax(180px,1fr) 220px 90px;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #eee5db}.att-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.att-btn{border:1px solid #ddd4c8;background:#fff;padding:9px 5px;border-radius:9px;font-weight:700;font-size:12px}.att-btn.active.present{background:#dcebdc;border-color:#9cc2a0;color:#2d6737}.att-btn.active.late{background:#f5e8bf;border-color:#d9bd6a;color:#795b15}.att-btn.active.absent{background:#f2d9d5;border-color:#d5a39c;color:#8e3028}.att-row .percent{text-align:right}.calendar-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.calendar-controls select{width:auto}.competition-form{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px}.competition-form .full-field{grid-column:1/-1}.modal-card.wide{width:min(760px,100%)}
+.card{box-shadow:0 4px 18px var(--shadow)}.hero{margin-bottom:22px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}.toolbar .search{max-width:360px}.table th{font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);background:var(--paper2)}.table tr:hover td{background:var(--paper2)}.member-card{display:flex;align-items:center;gap:14px}.member-avatar{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#ead8ca;color:#7d3825;font-weight:800;font-size:17px}.member-meta{min-width:0}.member-meta strong{display:block}.member-meta small{color:var(--muted);display:block;overflow:hidden;text-overflow:ellipsis}.action-row{display:flex;gap:7px;flex-wrap:wrap}.calendar-year{margin-top:22px}.calendar-year h2{display:flex;justify-content:space-between;align-items:center;margin:0 0 12px;font:600 28px Georgia,serif}.months-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.month-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:13px;box-shadow:0 4px 14px var(--shadow)}.month-title{font-weight:800;margin-bottom:9px}.month-week{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.month-week span{font-size:9px;text-align:center;color:var(--muted);font-weight:800}.month-day{min-height:31px;border:1px solid transparent;border-radius:7px;padding:4px;font-size:10px;position:relative}.month-day.has-event{background:#f3e1d3;color:#211f1c;border-color:#e4c6b4}.month-day .event-dot{display:block;width:5px;height:5px;border-radius:50%;background:#93432c;margin-top:2px}.month-day.empty{visibility:hidden}.month-day:hover{border-color:#cfae9b}.calendar-legend{display:flex;gap:14px;align-items:center;color:var(--muted);font-size:12px;margin-top:10px}.attendance-shell{display:flex;flex-direction:column;gap:6px}.att-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line)}.att-row{display:grid;grid-template-columns:minmax(180px,1fr) 220px 90px;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}.att-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.att-btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:9px 5px;border-radius:9px;font-weight:700;font-size:12px}.att-btn.active.present{background:#dcebdc;border-color:#9cc2a0;color:#2d6737}.att-btn.active.late{background:#f5e8bf;border-color:#d9bd6a;color:#795b15}.att-btn.active.absent{background:#f2d9d5;border-color:#d5a39c;color:#8e3028}.att-row .percent{text-align:right}.calendar-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.calendar-controls select{width:auto}.competition-form{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px}.competition-form .full-field{grid-column:1/-1}.modal-card.wide{width:min(760px,100%)}
 @media(max-width:1100px){.months-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:850px){.months-grid{grid-template-columns:repeat(2,1fr)}.attendance-shell{grid-template-columns:1fr}.group-tabs{display:grid;grid-template-columns:repeat(2,1fr)}.att-row{grid-template-columns:1fr}.att-row .percent{text-align:left}.competition-form{grid-template-columns:1fr}}
-@media(max-width:560px){.months-grid{grid-template-columns:1fr}.group-tabs{grid-template-columns:1fr}.calendar-year h2{font-size:23px}}
+@media(max-width:850px){.months-grid{grid-template-columns:repeat(2,1fr)}.att-row{grid-template-columns:1fr}.att-row .percent{text-align:left}.competition-form{grid-template-columns:1fr}}
+@media(max-width:560px){.months-grid{grid-template-columns:1fr}.calendar-year h2{font-size:23px}}
 
+/* --- Registration + documents + alumni --- */
+.login-card{max-height:94vh;overflow:auto}
+.auth-tabs{display:flex;gap:6px;background:var(--soft);padding:5px;border-radius:12px;margin-top:20px}
+.auth-tabs button{flex:1;border:0;background:transparent;padding:10px;border-radius:9px;font-weight:700;color:var(--muted)}
+.auth-tabs button.active{background:#211f1c;color:#fff}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px}
+@media(max-width:520px){.two-col{grid-template-columns:1fr}}
+.doc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:700px){.doc-grid{grid-template-columns:1fr}}
+.doc-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--paper)}
+.doc-card h3{margin:0 0 4px;font-size:16px}
+.doc-card .doc-status{font-size:12px;color:var(--muted);margin-bottom:10px}
+.doc-card .doc-status.ok{color:#2d6737;font-weight:700}
+.doc-card input[type=file]{width:100%;margin-bottom:10px}
+.alumni-card{display:flex;gap:14px;align-items:flex-start}
+.alumni-avatar{width:52px;height:52px;border-radius:50%;background:#ead8ca;color:#7d3825;display:grid;place-items:center;font-weight:800;font-size:20px;flex-shrink:0;overflow:hidden}
+.alumni-avatar img{width:100%;height:100%;object-fit:cover}
+.member-detail dt{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-top:12px}
+.member-detail dd{margin:2px 0 0;font-weight:600}
 </style>
 </head>
 <body>
 <div id="loginScreen" class="login">
-<form class="login-card" id="loginForm">
-<div class="logo">CULTURA <span>TEAM</span></div><h1>Welcome back.</h1>
+<div class="login-card">
+<div style="display:flex;justify-content:space-between;align-items:center"><div class="logo">CULTURA <span>TEAM</span></div><button class="theme-toggle" id="themeToggleLogin" onclick="toggleTheme()" title="Toggle day/night mode" type="button">🌙</button></div>
+<div class="auth-tabs"><button id="tabLoginBtn" class="active" onclick="setAuthTab('login')" type="button">Login</button><button id="tabRegisterBtn" onclick="setAuthTab('register')" type="button">Register</button></div>
+<form id="loginForm">
+<h1>Welcome back.</h1>
 <p class="muted">Sign in to access your cultural team portal.</p>
-<label class="field">Email<input id="loginEmail" type="email" required></label>
+<label class="field">College email<input id="loginEmail" type="email" required></label>
 <label class="field">Password<input id="loginPassword" type="password" required></label>
 <button class="btn accent full">Login →</button>
-</form></div>
+<p class="muted" style="margin-top:14px;font-size:13px">New here? <a href="#" onclick="setAuthTab('register');return false">Register first</a> to create your account.</p>
+<div class="demo"><b>Demo accounts</b><br>Admin: admin@cultura.local / Admin@123<br>Member: member@cultura.local / Member@123</div>
+</form>
+<form id="registerForm" class="hidden">
+<h1>Create your account.</h1>
+<p class="muted">You must register before you can log in. Fill in your details below.</p>
+<div class="two-col">
+<label class="field">Full name<input id="regName" required></label>
+<label class="field">Gender<select id="regGender" required><option value="">Select…</option><option value="male">Male</option><option value="female">Female</option><option value="other">Other</option></select></label>
+<label class="field">Father's name<input id="regFather" required></label>
+<label class="field">Mother's name<input id="regMother" required></label>
+<label class="field">Course name<input id="regCourse" placeholder="e.g. B.Tech Computer Science" required></label>
+<label class="field">Roll number<input id="regRoll" required></label>
+<label class="field">Contact number<input id="regContact" type="tel" required></label>
+<label class="field">Date of birth<input id="regDob" type="date" required></label>
+<label class="field full-field" style="grid-column:1/-1">College email ID<input id="regEmail" type="email" required></label>
+<label class="field">Password<input id="regPassword" type="password" required minlength="6"></label>
+<label class="field">Confirm password<input id="regPassword2" type="password" required minlength="6"></label>
+</div>
+<button class="btn accent full" style="margin-top:10px">Register →</button>
+<p class="muted" style="margin-top:14px;font-size:13px">Already registered? <a href="#" onclick="setAuthTab('login');return false">Login here</a>.</p>
+</form>
+</div></div>
 <div id="app" class="app hidden">
-<header class="top"><div class="logo">CULTURA <span>TEAM</span></div><nav><button onclick="showPage('home')">Home</button><button onclick="showPage('calendar')">Calendar</button><button onclick="showPage('profile')">Profile</button><div class="avatar" id="avatar">C</div><button onclick="logout()">Logout</button></nav></header>
+<header class="top"><div class="logo">CULTURA <span>TEAM</span></div><nav><button onclick="showPage('home')">Home</button><button onclick="showPage('calendar')">Calendar</button><button onclick="showPage('profile')">Profile</button><button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle day/night mode" type="button">🌙</button><div class="avatar" id="avatar">C</div><button onclick="logout()">Logout</button></nav></header>
 <div class="shell"><aside class="side" id="sidebar"></aside><main class="main" id="main"></main></div></div>
 <div id="modal" class="modal hidden"><div id="modalCard" class="modal-card"><button class="close" onclick="closeModal()">✕</button><div id="modalBody"></div></div></div>
 <div id="toast" class="toast hidden"></div>
@@ -82,16 +131,42 @@ async function api(p, o = {}) {
 
     return data;
 }
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  localStorage.setItem('cultura_theme',t);
+  const icon=t==='dark'?'☀️':'🌙';
+  const a=document.getElementById('themeToggle'),b=document.getElementById('themeToggleLogin');
+  if(a)a.textContent=icon; if(b)b.textContent=icon;
+}
+function toggleTheme(){applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')}
+applyTheme(localStorage.getItem('cultura_theme')||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 function toast(s){toastEl=document.getElementById('toast');toastEl.textContent=s;toastEl.classList.remove('hidden');setTimeout(()=>toastEl.classList.add('hidden'),2500)}
 async function boot(){if(!token)return;try{current=(await api('/auth/me')).user;openApp()}catch{}}
+function setAuthTab(tab){
+  const isLogin=tab==='login';
+  tabLoginBtn.classList.toggle('active',isLogin);tabRegisterBtn.classList.toggle('active',!isLogin);
+  loginForm.classList.toggle('hidden',!isLogin);registerForm.classList.toggle('hidden',isLogin);
+}
 document.getElementById('loginForm').onsubmit=async e=>{e.preventDefault();try{let x=await api('/auth/login',{method:'POST',body:JSON.stringify({email:loginEmail.value,password:loginPassword.value})});token=x.token;localStorage.setItem('cultura_token',token);current=x.user;openApp()}catch(e){alert(e.message)}};
+document.getElementById('registerForm').onsubmit=async e=>{
+  e.preventDefault();
+  try{
+    if(regPassword.value!==regPassword2.value) throw Error('Passwords do not match.');
+    let x=await api('/auth/register',{method:'POST',body:JSON.stringify({
+      name:regName.value.trim(),father_name:regFather.value.trim(),mother_name:regMother.value.trim(),
+      course_name:regCourse.value.trim(),gender:regGender.value,roll_number:regRoll.value.trim(),
+      contact_number:regContact.value.trim(),email:regEmail.value.trim(),password:regPassword.value,dob:regDob.value
+    })});
+    token=x.token;localStorage.setItem('cultura_token',token);current=x.user;openApp();toast('Welcome to Cultura! Your account is ready.');
+  }catch(e){alert(e.message)}
+};
 function logout(){token=null;current=null;localStorage.removeItem('cultura_token');app.classList.add('hidden');loginScreen.classList.remove('hidden')}
 async function openApp(){loginScreen.classList.add('hidden');app.classList.remove('hidden');avatar.textContent=current.name[0];buildSidebar();showPage(current.role==='admin'?'admin':'home')}
-function buildSidebar(){let common=`<button onclick="showPage('home')">🏠 Overview</button><button onclick="showPage('events')">📌 Competitions</button><button onclick="showPage('calendar')">📅 Calendar</button><button onclick="showPage('announcements')">📣 Announcements</button><button onclick="showPage('profile')">👤 My Profile</button>`;
+function buildSidebar(){let common=`<button onclick="showPage('home')">🏠 Overview</button><button onclick="showPage('events')">📌 Competitions</button><button onclick="showPage('calendar')">📅 Calendar</button><button onclick="showPage('announcements')">📣 Announcements</button><button onclick="showPage('alumni')">🎓 Alumni</button><button onclick="showPage('profile')">👤 My Profile</button>`;
 if(current.role==='admin')sidebar.innerHTML=`<div class="eyebrow">ADMIN CONTROL</div><button onclick="showPage('admin')">📊 Dashboard</button><button onclick="showPage('members')">👥 Members</button><button onclick="showPage('groups')">🎭 Groups</button><button onclick="showPage('attendance')">✅ Attendance</button>${common}`;
 else sidebar.innerHTML=`<div class="eyebrow">MY PORTAL</div>${common}<div class="section"><div class="eyebrow">MY GROUPS</div>${(current.groups||[]).map(g=>`<button onclick="showPage('chat',${g.id})">💬 ${esc(g.name)}</button>`).join('')}</div>`}
-async function showPage(p,arg){try{page=p; if(p==='admin')await adminPage();else if(p==='home')await homePage();else if(p==='members')await membersPage();else if(p==='groups')await groupsPage();else if(p==='attendance')await attendancePage();else if(p==='events')await eventsPage();else if(p==='calendar')await calendarPage();else if(p==='announcements')await announcementPage();else if(p==='profile')await profilePage();else if(p==='chat')await chatPage(arg)}catch(e){toast(e.message)}}
+async function showPage(p,arg){try{page=p; if(p==='admin')await adminPage();else if(p==='home')await homePage();else if(p==='members')await membersPage();else if(p==='groups')await groupsPage();else if(p==='attendance')await attendancePage();else if(p==='events')await eventsPage();else if(p==='calendar')await calendarPage();else if(p==='announcements')await announcementPage();else if(p==='alumni')await alumniPage();else if(p==='profile')await profilePage();else if(p==='chat')await chatPage(arg)}catch(e){toast(e.message)}}
 async function homePage(){let [s,ev,an]=await Promise.all([api('/dashboard'),api('/competitions'),api('/announcements')]);main.innerHTML=`<div class="hero"><div class="eyebrow">${current.role==='admin'?'ADMIN DASHBOARD':'MEMBER PORTAL'}</div><h1>Hello, ${esc(current.name.split(' ')[0])} 👋</h1><p class="muted">Your cultural team, competitions, attendance, announcements and conversations in one place.</p></div><div class="grid"><div class="card stat"><strong>${s.membersOrGroups}</strong><span>${current.role==='admin'?'Members':'My Groups'}</span></div><div class="card stat"><strong>${s.competitions}</strong><span>Upcoming Competitions</span></div><div class="card stat"><strong>${s.attendance}</strong><span>${current.role==='admin'?'Attendance Records':'My Attendance Records'}</span></div></div><div class="section"><h2>📌 Upcoming Competitions</h2><div class="grid2">${eventsHtml(ev.slice(0,2))}</div></div><div class="section"><h2>📣 Announcements</h2>${an.slice(0,3).map(a=>`<div class="card notice"><b>${esc(a.title)}</b><div>${esc(a.text)}</div><small>${a.date}</small></div>`).join('')}</div>`}
 function eventsHtml(a){
   return a.map(c=>`<div class="card event">
@@ -112,28 +187,76 @@ async function eventsPage(){let e=await api('/competitions');main.innerHTML=`<di
 async function adminPage(){let s=await api('/dashboard');main.innerHTML=`<div class="hero"><div class="eyebrow">CONTROL CENTER</div><h1>Admin Dashboard</h1><p class="muted">You control members, groups, attendance, competitions, announcements and permissions.</p></div><div class="grid"><div class="card stat"><strong>${s.memberCount}</strong><span>Members</span></div><div class="card stat"><strong>${s.groupCount}</strong><span>Groups</span></div><div class="card stat"><strong>${s.attendance}</strong><span>Attendance Records</span></div></div><div class="section grid2"><div class="card"><h2>Quick actions</h2><button class="btn accent" onclick="openMember()">+ Add Member</button> <button class="btn" onclick="openGroup()">+ Add Group</button> <button class="btn light" onclick="openCompetition()">+ Competition</button></div><div class="card"><h2>Attendance overview</h2><p>Present: <b>${s.present}</b></p><p>Late: <b>${s.late}</b></p><p>Overall records: <b>${s.attendance}</b></p></div></div>`}
 async function membersPage(){
   let u=await api('/members');
-  main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN · PEOPLE</div><h1>Member Management</h1><p class="muted">Create members, update their details, assign groups and keep the team directory clean.</p><div class="hero-actions"><button class="btn accent" onclick="openMember()">＋ New Member</button><button class="btn light" onclick="showPage('groups')">Manage Groups</button></div></div>
+  main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN · PEOPLE</div><h1>Member Management</h1><p class="muted">Create members, update their details, assign groups and keep the team directory clean.</p><div class="hero-actions"><button class="btn accent" onclick="openMember()">＋ New Member</button><button class="btn light" onclick="showPage('groups')">Manage Groups</button><button class="btn light" onclick="downloadAllMemberDocuments()">⬇ Download All Documents</button></div></div>
   <div class="card"><div class="toolbar"><input class="search" id="memberSearch" placeholder="Search name, email or group…" oninput="filterMembers()"><span class="pill">${u.length} members</span></div><div class="tablewrap"><table class="table"><thead><tr><th>Member</th><th>Groups</th><th>Actions</th></tr></thead><tbody id="memberRows">${memberRows(u)}</tbody></table></div></div>`;
   window.memberData=u;
 }
-function memberRows(u){return u.map(x=>`<tr data-search="${esc((x.name+' '+x.email+' '+x.groups.map(g=>g.name).join(' ')).toLowerCase())}"><td><div class="member-card"><div class="member-avatar">${esc((x.name||'?')[0].toUpperCase())}</div><div class="member-meta"><strong>${esc(x.name)}</strong><small>${esc(x.email)}</small></div></div></td><td>${x.groups.length?x.groups.map(g=>`<span class="pill">${esc(g.name)}</span>`).join(' '):'<span class="muted">No group</span>'}</td><td><div class="action-row"><button class="btn light sm" onclick="editMember(${x.id})">Edit</button><button class="btn danger sm" onclick="removeMember(${x.id})">Remove</button></div></td></tr>`).join('')||'<tr><td colspan=3>No members found.</td></tr>'}
+function memberRows(u){return u.map(x=>`<tr data-search="${esc((x.name+' '+x.email+' '+(x.roll_number||'')+' '+x.groups.map(g=>g.name).join(' ')).toLowerCase())}"><td><div class="member-card"><div class="member-avatar">${esc((x.name||'?')[0].toUpperCase())}</div><div class="member-meta"><strong>${esc(x.name)}</strong><small>${esc(x.email)}</small><small>${esc(x.roll_number||'No roll number')} · ${esc(x.course_name||'—')}</small></div></div></td><td>${x.groups.length?x.groups.map(g=>`<span class="pill">${esc(g.name)}</span>`).join(' '):'<span class="muted">No group</span>'}</td><td><div class="action-row"><button class="btn light sm" onclick="viewMember(${x.id})">View</button><button class="btn light sm" onclick="editMember(${x.id})">Edit</button><button class="btn light sm" onclick="downloadMemberDocuments(${x.id},'${esc(x.name).replace(/'/g,"\\'")}')">Docs</button><button class="btn danger sm" onclick="removeMember(${x.id})">Remove</button></div></td></tr>`).join('')||'<tr><td colspan=3>No members found.</td></tr>'}
+async function viewMember(id){
+  const u=(await api('/members')).find(x=>x.id===id);
+  if(!u) return toast('Member not found');
+  const docRow=(label,url)=>`<div class="row"><span>${label}</span>${url?`<a class="btn light sm" href="${esc(url)}" target="_blank" rel="noopener" download>Download</a>`:'<span class="pill">Not uploaded</span>'}</div>`;
+  modalCard.classList.add('wide');
+  modalBody.innerHTML=`<h2 style="margin-top:0">${esc(u.name)}</h2><p class="muted">${esc(u.email)}</p>
+  <div class="grid2 member-detail" style="display:grid;grid-template-columns:1fr 1fr">
+    <dl style="margin:0"><dt>Roll number</dt><dd>${esc(u.roll_number||'—')}</dd><dt>Course</dt><dd>${esc(u.course_name||'—')}</dd><dt>Gender</dt><dd>${esc(u.gender||'—')}</dd><dt>Date of birth</dt><dd>${u.dob?esc(String(u.dob).slice(0,10)):'—'}</dd></dl>
+    <dl style="margin:0"><dt>Father's name</dt><dd>${esc(u.father_name||'—')}</dd><dt>Mother's name</dt><dd>${esc(u.mother_name||'—')}</dd><dt>Contact number</dt><dd>${esc(u.contact_number||'—')}</dd><dt>Groups</dt><dd>${u.groups.length?u.groups.map(g=>esc(g.name)).join(', '):'—'}</dd></dl>
+  </div>
+  <div class="section"><h2 style="font-size:20px">Documents</h2>
+    ${docRow('Timetable',u.timetable_url)}
+    ${docRow('Fees Receipt',u.fees_receipt_url)}
+    ${docRow('Bonafide Certificate',u.bonafide_url)}
+    ${docRow('ID Card Photo',u.id_card_url)}
+  </div>
+  <div class="action-row" style="margin-top:14px"><button class="btn light" onclick="closeModal()">Close</button><button class="btn light" onclick="downloadMemberDocuments(${u.id},'${esc(u.name).replace(/'/g,"\\'")}')">⬇ Download all documents</button><button class="btn accent" onclick="editMember(${u.id})">Edit member</button></div>`;
+  modal.classList.remove('hidden');
+}
 function filterMembers(){let q=(memberSearch.value||'').toLowerCase();document.querySelectorAll('#memberRows tr[data-search]').forEach(r=>r.style.display=r.dataset.search.includes(q)?'':'none')}
 
 async function groupsPage(){let g=await api('/groups');main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN</div><h1>Group Management</h1><button class="btn accent" onclick="openGroup()">+ New Group</button></div><div class="grid">${g.map(x=>`<div class="card"><div class="avatar">${esc(x.name[0])}</div><h2>${esc(x.name)}</h2><p>${esc(x.description||'')}</p><p><b>Leader:</b> ${esc(x.leader_name||'Not assigned')}</p><button class="btn light" onclick="editGroup(${x.id})">Edit</button> <button class="btn danger" onclick="removeGroup(${x.id})">Delete</button></div>`).join('')}</div>`}
 async function attendancePage(){
   const today=localDateISO();
-  main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN · DAILY OPERATIONS</div><h1>Attendance</h1><p class="muted">Select a group, mark everyone in seconds, then save once. No dropdown hunting.</p></div>
-  <div class="card"><div class="toolbar"><label class="field" style="margin:0;min-width:180px">Date<input id="attDate" type="date" value="${today}" onchange="loadAttendance()"></label><div class="action-row"><button class="btn success sm" onclick="bulkAttendance('present')">✓ All Present</button><button class="btn warn sm" onclick="bulkAttendance('late')">◷ All Late</button><button class="btn danger sm" onclick="bulkAttendance('absent')">× All Absent</button></div></div><div id="attendanceContent" style="margin-top:16px"></div></div>`;
-  await loadAttendance();
+  window.attendanceEdits={};
+  main.innerHTML=`<div class="hero"><div class="eyebrow">ADMIN · DAILY OPERATIONS</div><h1>Attendance</h1><p class="muted">Mark each member present, late or absent individually for the selected date, then save.</p></div>
+  <div class="card"><div class="toolbar"><label class="field" style="margin:0;min-width:180px">Date<input id="attDate" type="date" value="${today}" onchange="loadAttendance(true)"></label><input class="search" id="attSearch" placeholder="Search members…" oninput="filterAttendance()" style="max-width:260px"><div class="action-row"><button class="btn success sm" onclick="bulkAttendance('present')">✓ All Present</button><button class="btn warn sm" onclick="bulkAttendance('late')">◷ All Late</button><button class="btn danger sm" onclick="bulkAttendance('absent')">× All Absent</button></div></div><div id="attendanceContent" style="margin-top:16px"></div></div>`;
+  await loadAttendance(true);
 }
 function localDateISO(){const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)}
-async function loadAttendance(){try{const x=await api('/attendance?date='+attDate.value);window.attendanceData=x;window.activeAttendanceGroup=window.activeAttendanceGroup||x.groups[0]?.id;renderAttendance();}catch(e){toast(e.message)}}
-function renderAttendance(){const groups=window.attendanceData?.groups||[];if(!groups.length){attendanceContent.innerHTML='<div class="notice">No groups or members have been created yet.</div>';return}if(!groups.some(g=>g.id===window.activeAttendanceGroup))window.activeAttendanceGroup=groups[0].id;const g=groups.find(g=>g.id===window.activeAttendanceGroup);attendanceContent.innerHTML=`<div class="attendance-shell"><div class="group-tabs">${groups.map(x=>`<button class="group-tab ${x.id===g.id?'active':''}" onclick="selectAttendanceGroup(${x.id})"><b>${esc(x.name)}</b><br><small>${x.members.length} members</small></button>`).join('')}</div><div><div class="att-toolbar"><div><h2 style="margin:0">${esc(g.name)}</h2><small class="muted">${attDate.value}</small></div><button class="btn accent" onclick="saveAttendance()">Save attendance</button></div><div style="margin-top:8px">${g.members.map(u=>attendanceRow(u,g.id)).join('')||'<div class="notice">No members in this group.</div>'}</div></div></div>`}
-function attendanceRow(u,gid){const st=u.today||'present';return `<div class="att-row" data-att-user="${u.id}" data-att-group="${gid}"><div><b>${esc(u.name)}</b></div><div class="att-buttons"><button class="att-btn ${st==='present'?'active present':''}" onclick="chooseAttendance(${u.id},${gid},'present')">✓ Present</button><button class="att-btn ${st==='late'?'active late':''}" onclick="chooseAttendance(${u.id},${gid},'late')">◷ Late</button><button class="att-btn ${st==='absent'?'active absent':''}" onclick="chooseAttendance(${u.id},${gid},'absent')">× Absent</button></div><div class="percent"><span class="pill ${u.percent>=75?'green':u.percent>=50?'yellow':'red'}">${u.percent}%</span></div></div>`}
-function selectAttendanceGroup(id){window.activeAttendanceGroup=id;renderAttendance()}
-function chooseAttendance(uid,gid,status){const row=document.querySelector(`[data-att-user="${uid}"][data-att-group="${gid}"]`);if(!row)return;row.querySelectorAll('.att-btn').forEach(b=>b.classList.remove('active','present','late','absent'));const cls=status;row.querySelector(`.att-btn:nth-child(${status==='present'?1:status==='late'?2:3})`).classList.add('active',cls);row.dataset.status=status}
-function bulkAttendance(status){const g=window.attendanceData?.groups?.find(g=>g.id===window.activeAttendanceGroup);if(!g)return;g.members.forEach(u=>chooseAttendance(u.id,g.id,status));toast(`Marked ${status} for ${g.members.length} members. Click Save attendance.`)}
-async function saveAttendance(){const g=window.attendanceData?.groups?.find(g=>g.id===window.activeAttendanceGroup);if(!g)return;const rows=[...document.querySelectorAll(`[data-att-group="${g.id}"]`)];const records=rows.map(r=>({user_id:+r.dataset.attUser,group_id:+r.dataset.attGroup,date:attDate.value,status:r.dataset.status||g.members.find(u=>u.id===+r.dataset.attUser)?.today||'present'}));try{await api('/attendance/bulk',{method:'POST',body:JSON.stringify({records})});toast('Attendance saved');await loadAttendance()}catch(e){toast(e.message)}}
+async function loadAttendance(resetEdits){try{if(resetEdits)window.attendanceEdits={};const x=await api('/attendance?date='+attDate.value);window.attendanceData=x;renderAttendance();}catch(e){toast(e.message)}}
+function renderAttendance(){
+  const members=window.attendanceData?.members||[];
+  if(!members.length){attendanceContent.innerHTML='<div class="notice">No members have been created yet.</div>';return}
+  attendanceContent.innerHTML=`<div class="attendance-shell"><div class="att-toolbar"><div><h2 style="margin:0">All Members</h2><small class="muted">${attDate.value} · ${members.length} members</small></div><button class="btn accent" onclick="saveAttendance()">Save attendance</button></div><div id="attendanceRows" style="margin-top:8px">${members.map(u=>attendanceRow(u)).join('')}</div></div>`;
+}
+function attendanceRow(u){
+  const st=(window.attendanceEdits&&window.attendanceEdits[u.id])||u.today||'present';
+  const btn=(status,label)=>`<button class="att-btn ${st===status?'active '+status:''}" data-status="${status}" onclick="chooseAttendance(${u.id},'${status}')">${label}</button>`;
+  return `<div class="att-row" data-att-user="${u.id}" data-status="${st}" data-search="${esc((u.name+' '+(u.roll_number||'')).toLowerCase())}"><div><b>${esc(u.name)}</b>${u.roll_number?`<br><small class="muted">${esc(u.roll_number)}</small>`:''}</div><div class="att-buttons">${btn('present','✓ Present')}${btn('late','◷ Late')}${btn('absent','× Absent')}</div><div class="percent"><span class="pill ${u.percent>=75?'green':u.percent>=50?'yellow':'red'}">${u.percent}%</span></div></div>`;
+}
+function chooseAttendance(uid,status){
+  const row=document.querySelector(`[data-att-user="${uid}"]`);
+  if(!row)return;
+  row.querySelectorAll('.att-btn').forEach(b=>b.classList.remove('active','present','late','absent'));
+  const target=row.querySelector(`.att-btn[data-status="${status}"]`);
+  if(target)target.classList.add('active',status);
+  row.dataset.status=status;
+  window.attendanceEdits=window.attendanceEdits||{};
+  window.attendanceEdits[uid]=status;
+}
+function bulkAttendance(status){const members=window.attendanceData?.members||[];members.forEach(u=>chooseAttendance(u.id,status));toast(`Marked ${status} for ${members.length} members. Click Save attendance.`)}
+function filterAttendance(){let q=(attSearch.value||'').toLowerCase();document.querySelectorAll('#attendanceRows [data-search]').forEach(r=>r.style.display=r.dataset.search.includes(q)?'':'none')}
+async function saveAttendance(){
+  const members=window.attendanceData?.members||[];
+  if(!members.length)return;
+  const rows=[...document.querySelectorAll('[data-att-user]')];
+  const records=rows.map(r=>({user_id:+r.dataset.attUser,date:attDate.value,status:r.dataset.status||members.find(u=>u.id===+r.dataset.attUser)?.today||'present'}));
+  try{
+    await api('/attendance/bulk',{method:'POST',body:JSON.stringify({records})});
+    toast('Attendance saved for all members');
+    window.attendanceEdits={};
+    await loadAttendance(false);
+  }catch(e){toast(e.message)}
+}
 async function eventsPage(){let e=await api('/competitions');main.innerHTML=`<div class="hero"><div class="eyebrow">PIN BOARD</div><h1>Competitions</h1>${current.role==='admin'?'<button class="btn accent" onclick="openCompetition()">+ Add Competition</button>':''}</div><div class="grid2">${eventsHtml(e)}</div>`}
 async function calendarPage(){
   const e=await api('/competitions');
@@ -155,8 +278,89 @@ async function announcementPage(){
     ${current.role==='admin'?`<br><button class="btn light" onclick="openAnnouncement(${x.id})">Edit</button> <button class="btn danger" onclick="removeAnnouncement(${x.id})">Delete</button>`:''}
   </div>`).join('')||'<div class="card">No announcements yet.</div>'}`
 }
-async function profilePage(){let x=await api('/profile');main.innerHTML=`<div class="hero"><div class="eyebrow">MY PROFILE</div><h1>${esc(x.name)}</h1><p class="muted">${esc(x.email)}</p></div><div class="grid2"><div class="card"><h2>Personal Profile</h2><p><b>Name:</b> ${esc(x.name)}</p><p><b>Email:</b> ${esc(x.email)}</p><p><b>Role:</b> ${x.role}</p></div><div class="card"><h2>My Attendance</h2><div class="stat"><strong>${x.percent}%</strong><span>Overall attendance</span></div><p>Present/Late: ${x.good} · Absent: ${x.absent}</p></div></div><div class="section card"><h2>My Groups</h2>${x.groups.map(g=>`<span class="pill">${esc(g.name)}</span>`).join(' ')}</div><div class="section card"><h2>Files</h2><input id="fileUpload" type="file"><button class="btn accent" onclick="uploadFile()">Upload file</button><div id="uploadResult"></div></div><div class="section card"><h2>Attendance History</h2>${x.records.map(a=>`<div class="row"><span>${a.date} · ${esc(a.group_name)}</span><span class="pill ${a.status==='present'?'green':a.status==='late'?'yellow':'red'}">${a.status}</span></div>`).join('')||'No attendance recorded.'}</div>`}
-async function uploadFile(){const f=fileUpload.files[0];if(!f)return toast('Choose a file first');const fd=new FormData();fd.append('file',f);try{const r=await fetch(API+'/upload',{method:'POST',headers:{Authorization:'Bearer '+token},body:fd});const x=await r.json();if(!r.ok)throw Error(x.error||'Upload failed');uploadResult.innerHTML=`<div class="notice">Uploaded: <a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name)}</a></div>`;toast('File uploaded to Supabase Storage')}catch(e){toast(e.message)}}
+async function alumniPage(){
+  let a=await api('/alumni');
+  main.innerHTML=`<div class="hero"><div class="eyebrow">PASSOUT STUDENTS</div><h1>Alumni</h1><p class="muted">Former team members — who they were and what they went on to do.</p>${current.role==='admin'?'<button class="btn accent" onclick="openAlumnus()">+ Add Alumnus</button>':''}</div>
+  <div class="grid2">${a.map(x=>`<div class="card alumni-card">
+    <div class="alumni-avatar">${x.photo_url?`<img src="${esc(x.photo_url)}" alt="">`:esc((x.name||'?')[0].toUpperCase())}</div>
+    <div style="flex:1;min-width:0">
+      <h3 style="margin:0">${esc(x.name)}</h3>
+      <small class="muted">${esc(x.course_name||'')}${x.batch_year?' · Batch '+esc(x.batch_year):''}</small>
+      ${x.role_then?`<p style="margin:8px 0 2px"><b>Back then:</b> ${esc(x.role_then)}</p>`:''}
+      ${x.current_work?`<p style="margin:2px 0"><b>Now:</b> ${esc(x.current_work)}</p>`:''}
+      ${x.bio?`<p class="muted" style="margin-top:6px">${esc(x.bio)}</p>`:''}
+      ${current.role==='admin'?`<div class="action-row" style="margin-top:8px"><button class="btn light sm" onclick="openAlumnus(${x.id})">Edit</button><button class="btn danger sm" onclick="removeAlumnus(${x.id})">Remove</button></div>`:''}
+    </div>
+  </div>`).join('')||'<div class="card">No alumni added yet.</div>'}</div>`;
+}
+async function openAlumnus(id=null){
+  let item=id?(await api('/alumni')).find(x=>x.id===id):null;
+  modalCard.classList.add('wide');
+  modalBody.innerHTML=`<h2 style="margin-top:0">${id?'Edit alumnus':'Add alumnus'}</h2><div class="competition-form">
+  <label class="field">Full name<input id="alName" value="${esc(item?.name||'')}" required></label>
+  <label class="field">Course<input id="alCourse" value="${esc(item?.course_name||'')}"></label>
+  <label class="field">Batch / passout year<input id="alBatch" value="${esc(item?.batch_year||'')}" placeholder="e.g. 2023"></label>
+  <label class="field">Role in the team back then<input id="alRoleThen" value="${esc(item?.role_then||'')}" placeholder="e.g. Lead dancer, Dance group"></label>
+  <label class="field">What they do now<input id="alCurrent" value="${esc(item?.current_work||'')}" placeholder="e.g. Software Engineer at Acme"></label>
+  <label class="field full-field">Short bio<textarea id="alBio" rows="3">${esc(item?.bio||'')}</textarea></label>
+  <label class="field full-field">Photo<input id="alPhoto" type="file" accept="image/*"></label>
+  </div><div class="action-row"><button class="btn light" onclick="closeModal()">Cancel</button><button class="btn accent" onclick="saveAlumnus(${id||0})">${id?'Save changes':'Add alumnus'}</button></div>`;
+  modal.classList.remove('hidden');
+}
+async function saveAlumnus(id){
+  try{
+    const old=id?(await api('/alumni')).find(x=>x.id===id):null;
+    const photo_path=await uploadPickedFile('alPhoto')||old?.photo_path||null;
+    if(!alName.value.trim()) throw Error('Name is required.');
+    await api(id?'/alumni/'+id:'/alumni',{method:id?'PUT':'POST',body:JSON.stringify({
+      name:alName.value.trim(),course_name:alCourse.value.trim(),batch_year:alBatch.value.trim(),
+      role_then:alRoleThen.value.trim(),current_work:alCurrent.value.trim(),bio:alBio.value.trim(),photo_path
+    })});
+    closeModal();toast(id?'Alumnus updated':'Alumnus added');showPage('alumni');
+  }catch(e){toast(e.message)}
+}
+async function removeAlumnus(id){if(confirm('Remove this alumnus?')){await api('/alumni/'+id,{method:'DELETE'});showPage('alumni')}}
+const DOC_TYPES=[{key:'timetable',label:'Timetable',input:'docTimetable'},{key:'fees_receipt',label:'Fees Receipt',input:'docFees'},{key:'bonafide',label:'Bonafide Certificate',input:'docBonafide'},{key:'id_card',label:'ID Card Photo',input:'docIdCard'}];
+async function profilePage(){
+  let x=await api('/profile');
+  main.innerHTML=`<div class="hero"><div class="eyebrow">MY PROFILE</div><h1>${esc(x.name)}</h1><p class="muted">${esc(x.email)}</p></div>
+  <div class="grid2">
+    <div class="card"><h2>Personal Profile</h2>
+      <p><b>Full name:</b> ${esc(x.name)}</p>
+      <p><b>College email:</b> ${esc(x.email)}</p>
+      <p><b>Roll number:</b> ${esc(x.roll_number||'—')}</p>
+      <p><b>Course:</b> ${esc(x.course_name||'—')}</p>
+      <p><b>Gender:</b> ${esc(x.gender||'—')}</p>
+      <p><b>Date of birth:</b> ${x.dob?esc(String(x.dob).slice(0,10)):'—'}</p>
+      <p><b>Father's name:</b> ${esc(x.father_name||'—')}</p>
+      <p><b>Mother's name:</b> ${esc(x.mother_name||'—')}</p>
+      <p><b>Contact number:</b> ${esc(x.contact_number||'—')}</p>
+      <p><b>Role:</b> ${x.role}</p>
+    </div>
+    <div class="card"><h2>My Attendance</h2><div class="stat"><strong>${x.percent}%</strong><span>Overall attendance</span></div><p>Present/Late: ${x.good} · Absent: ${x.absent}</p></div>
+  </div>
+  <div class="section card"><h2>My Groups</h2>${(x.groups||[]).map(g=>`<span class="pill">${esc(g.name)}</span>`).join(' ')||'<span class="muted">Not assigned to any group yet.</span>'}</div>
+  <div class="section"><h2>My Documents</h2><p class="muted">Upload your timetable, fees receipt, bonafide certificate and a photo of your ID card. Admins can view and download these.</p>
+    <div class="doc-grid">${DOC_TYPES.map(d=>`<div class="doc-card">
+      <h3>${d.label}</h3>
+      <div class="doc-status ${x[d.key+'_url']?'ok':''}">${x[d.key+'_url']?`✓ Uploaded — <a href="${esc(x[d.key+'_url'])}" target="_blank" rel="noopener">view / download</a>`:'Not uploaded yet'}</div>
+      <input id="${d.input}" type="file" accept=".pdf,.doc,.docx,image/*">
+      <button class="btn light sm" onclick="uploadDocument('${d.key}','${d.input}')">${x[d.key+'_url']?'Replace':'Upload'}</button>
+    </div>`).join('')}</div>
+  </div>
+  <div class="section card"><h2>Attendance History</h2>${x.records.map(a=>`<div class="row"><span>${esc(String(a.date||'').slice(0,10))}</span><span class="pill ${a.status==='present'?'green':a.status==='late'?'yellow':'red'}">${a.status}</span></div>`).join('')||'No attendance recorded.'}</div>`;
+}
+async function uploadDocument(type,inputId){
+  const f=document.getElementById(inputId)?.files?.[0];
+  if(!f)return toast('Choose a file first');
+  try{
+    const path=await uploadPickedFile(inputId);
+    if(!path) return toast('Upload failed');
+    await api('/profile/documents',{method:'POST',body:JSON.stringify({type,path})});
+    toast('Document uploaded');
+    profilePage();
+  }catch(e){toast(e.message)}
+}
 async function chatPage(gid){let g=(await api('/groups')).find(x=>x.id===+gid);main.innerHTML=`<div class="hero"><div class="eyebrow">GROUP CHAT</div><h1>${esc(g.name)} 💬</h1><p class="muted">${esc(g.description||'')}</p></div><div class="card chat"><div id="chatMessages" class="messages"></div><div class="composer"><input id="chatInput" placeholder="Message the ${esc(g.name)} group..."><button class="btn accent" onclick="sendMessage(${gid})">Send</button></div></div>`;renderMessages(gid)}
 async function renderMessages(gid){let m=await api('/groups/'+gid+'/messages');chatMessages.innerHTML=m.map(x=>`<div class="msg"><b>${esc(x.user_name)}</b><small>${new Date(x.created_at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</small><div>${esc(x.text)}</div></div>`).join('');chatMessages.scrollTop=chatMessages.scrollHeight}
 async function sendMessage(gid){let text=chatInput.value.trim();if(!text)return;await api('/groups/'+gid+'/messages',{method:'POST',body:JSON.stringify({text})});chatInput.value='';renderMessages(gid)}
@@ -164,15 +368,54 @@ function closeModal(){modal.classList.add('hidden');modalCard.classList.remove('
 async function openMember(id=null){
   const groups=await api('/groups');
   modalCard.classList.add('wide');
-  modalBody.innerHTML=`<h2 style="margin-top:0">${id?'Edit member':'Create new member'}</h2><p class="muted">${id?'Update the member profile and group assignments.':'Add a member to the team and optionally assign their groups now.'}</p><div class="competition-form"><label class="field">Full name<input id="mName" autocomplete="name" placeholder="e.g. Aditi Sharma" required></label><label class="field">Email address<input id="mEmail" type="email" autocomplete="email" placeholder="name@example.com" required></label><label class="field">${id?'New password (optional)':'Password'}<input id="mPass" type="password" placeholder="${id?'Leave blank to keep current password':'Member@123'}" ${id?'':'value="Member@123"'}></label><label class="field">Groups<select id="mGroups" multiple size="5">${groups.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join('')}</select></label></div><div class="notice">Tip: Hold Ctrl/Cmd to select multiple groups.</div><div class="action-row"><button class="btn light" onclick="closeModal()">Cancel</button><button class="btn accent" onclick="saveMember(${id||0})">${id?'Save changes':'Create member'}</button></div>`;
-  if(id){const u=(await api('/members')).find(x=>x.id===id);if(!u)throw Error('Member not found');mName.value=u.name;mEmail.value=u.email;[...mGroups.options].forEach(o=>o.selected=u.groups.some(g=>g.id===+o.value))}
+  modalBody.innerHTML=`<h2 style="margin-top:0">${id?'Edit member':'Create new member'}</h2><p class="muted">${id?'Update the member profile and group assignments.':'Add a member to the team and optionally assign their groups now.'}</p><div class="competition-form">
+  <label class="field">Full name<input id="mName" autocomplete="name" placeholder="e.g. Aditi Sharma" required></label>
+  <label class="field">College email ID<input id="mEmail" type="email" autocomplete="email" placeholder="name@college.edu" required></label>
+  <label class="field">Father's name<input id="mFather"></label>
+  <label class="field">Mother's name<input id="mMother"></label>
+  <label class="field">Course name<input id="mCourse"></label>
+  <label class="field">Gender<select id="mGender"><option value="">Select…</option><option value="male">Male</option><option value="female">Female</option><option value="other">Other</option></select></label>
+  <label class="field">Roll number<input id="mRoll"></label>
+  <label class="field">Contact number<input id="mContact" type="tel"></label>
+  <label class="field">Date of birth<input id="mDob" type="date"></label>
+  <label class="field">${id?'New password (optional)':'Password'}<input id="mPass" type="password" placeholder="${id?'Leave blank to keep current password':'Member@123'}" ${id?'':'value="Member@123"'}></label>
+  <label class="field full-field">Groups<select id="mGroups" multiple size="5">${groups.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join('')}</select></label>
+  </div><div class="notice">Tip: Hold Ctrl/Cmd to select multiple groups.</div><div class="action-row"><button class="btn light" onclick="closeModal()">Cancel</button><button class="btn accent" onclick="saveMember(${id||0})">${id?'Save changes':'Create member'}</button></div>`;
+  if(id){
+    const u=(await api('/members')).find(x=>x.id===id);if(!u)throw Error('Member not found');
+    mName.value=u.name;mEmail.value=u.email;mFather.value=u.father_name||'';mMother.value=u.mother_name||'';
+    mCourse.value=u.course_name||'';mGender.value=u.gender||'';mRoll.value=u.roll_number||'';mContact.value=u.contact_number||'';
+    mDob.value=u.dob?String(u.dob).slice(0,10):'';
+    [...mGroups.options].forEach(o=>o.selected=u.groups.some(g=>g.id===+o.value));
+  }
   modal.classList.remove('hidden');
 }
-async function saveMember(id){let groups=[...mGroups.selectedOptions].map(o=>+o.value);await api(id?'/members/'+id:'/members',{method:id?'PUT':'POST',body:JSON.stringify({name:mName.value,email:mEmail.value,password:mPass.value,groups})});closeModal();showPage('members')}
+async function saveMember(id){
+  let groups=[...mGroups.selectedOptions].map(o=>+o.value);
+  await api(id?'/members/'+id:'/members',{method:id?'PUT':'POST',body:JSON.stringify({
+    name:mName.value,email:mEmail.value,password:mPass.value,groups,
+    father_name:mFather.value,mother_name:mMother.value,course_name:mCourse.value,
+    gender:mGender.value,roll_number:mRoll.value,contact_number:mContact.value,dob:mDob.value||null
+  })});
+  closeModal();showPage('members');
+}
 function editMember(id){openMember(id)}async function removeMember(id){if(confirm('Remove this member?')){await api('/members/'+id,{method:'DELETE'});showPage('members')}}
 async function openGroup(id=null){let users=await api('/members');modalBody.innerHTML=`<h2>${id?'Edit':'Create'} Group</h2><div class="field">Name<input id="gName"></div><div class="field">Description<textarea id="gDesc"></textarea></div><div class="field">Team leader<select id="gLeader"><option value="">None</option>${users.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join('')}</select></div><button class="btn accent" onclick="saveGroup(${id||0})">Save</button>`;if(id){let g=(await api('/groups')).find(x=>x.id===id);gName.value=g.name;gDesc.value=g.description||'';gLeader.value=g.leader_id||''}modal.classList.remove('hidden')}
 async function saveGroup(id){await api(id?'/groups/'+id:'/groups',{method:id?'PUT':'POST',body:JSON.stringify({name:gName.value,description:gDesc.value,leader_id:gLeader.value||null})});closeModal();buildSidebar();showPage('groups')}
 function editGroup(id){openGroup(id)}async function removeGroup(id){if(confirm('Delete this group?')){await api('/groups/'+id,{method:'DELETE'});buildSidebar();showPage('groups')}}
+async function downloadFile(path,filename){
+  try{
+    const token=localStorage.getItem('cultura_token');
+    const r=await fetch('/api'+path,{headers:token?{Authorization:'Bearer '+token}:{}});
+    if(!r.ok){let e={};try{e=await r.json()}catch(_){}throw Error(e.error||'Download failed')}
+    const blob=await r.blob();
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  }catch(e){toast(e.message)}
+}
+async function downloadAllMemberDocuments(){downloadFile('/members/documents/export','cultura-all-member-documents.zip')}
+async function downloadMemberDocuments(id,name){downloadFile('/members/'+id+'/documents/export',`${String(name||'member').replace(/[^a-zA-Z0-9 _-]/g,'').trim()||'member'}-documents.zip`)}
 async function uploadPickedFile(inputId){
   const f=document.getElementById(inputId)?.files?.[0]; if(!f)return null;
   const fd=new FormData();fd.append('file',f);
@@ -192,8 +435,16 @@ async function unregisterCompetition(id){await api('/competitions/'+id+'/registe
 async function removeCompetition(id){if(confirm('Delete this competition?')){await api('/competitions/'+id,{method:'DELETE'});showPage('events')}}
 async function showParticipants(id){
   const p=await api('/competitions/'+id+'/participants');
-  modalBody.innerHTML=`<h2>Participants</h2>${p.map(x=>`<div class="row"><span>${esc(x.name)}</span><small>${esc(x.email)}</small></div>`).join('')||'No registrations yet.'}`;
+  modalBody.innerHTML=`<h2>Participants</h2>${p.map(x=>`<div class="row"><span><b>${esc(x.name)}</b><br><small class="muted">${esc(x.email)}</small></span><button class="btn danger sm" onclick="removeParticipant(${id},${x.id})">Remove</button></div>`).join('')||'No registrations yet.'}`;
   modal.classList.remove('hidden');
+}
+async function removeParticipant(compId,userId){
+  if(!confirm('Remove this participant from the competition?'))return;
+  try{
+    await api('/competitions/'+compId+'/participants/'+userId,{method:'DELETE'});
+    toast('Participant removed');
+    await showParticipants(compId);
+  }catch(e){toast(e.message)}
 }
 async function openResult(id){
   const item=(await api('/competitions')).find(x=>x.id===id);
