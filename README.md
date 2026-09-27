@@ -61,6 +61,10 @@ Demo accounts:
 - Admin: admin@cultura.local / Admin@123
 - Member: member@cultura.local / Member@123
 
+New members can also self-register from the login screen (Register tab) with
+their full name, father's/mother's name, course, gender, roll number, contact
+number, college email and date of birth — no admin action required first.
+
 ## 4. Start
 
     npm start
@@ -71,9 +75,25 @@ Open:
 
 ## Important
 
-The old version stored application data in browser localStorage. The new version stores users, groups, attendance, competitions, announcements and messages in PostgreSQL.
+The old version stored application data in browser localStorage. The new version stores users, groups, attendance, competitions, announcements, alumni and messages in PostgreSQL.
 
 Passwords are stored as bcrypt hashes and login uses JWT authentication.
+
+## Registration, profiles, documents & alumni
+
+- Anyone can self-register from the login screen (no admin action required).
+  Registration captures full name, father's name, mother's name, course name,
+  gender, roll number, contact number, college email and date of birth.
+- Each member has a "My Documents" section on their profile page to upload
+  their timetable, fees receipt, bonafide certificate and a photo of their ID
+  card (stored in Supabase Storage).
+- Admins can open any member from Members → View to see their full profile
+  and download every uploaded document directly.
+- The Alumni page is a simple directory of passout students — what they did
+  on the team and what they're doing now. Admins can add/edit/remove entries.
+
+See `backend/DATABASE.md` for how to apply these changes to an existing
+database.
 
 ## Production
 
