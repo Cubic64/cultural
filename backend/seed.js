@@ -8,10 +8,14 @@ const pool=new Pool({connectionString:process.env.DATABASE_URL});
  try{
   await c.query(require('fs').readFileSync(require('path').join(__dirname,'schema.sql'),'utf8'));
   const adminHash=await bcrypt.hash('Admin@123',12), memberHash=await bcrypt.hash('Member@123',12);
-  await c.query(`INSERT INTO users(name,email,password_hash,role) VALUES
-   ('Team Admin','admin@cultura.local',$1,'admin'),
-   ('Aarav Member','member@cultura.local',$2,'member')
+  await c.query(`INSERT INTO users(name,email,password_hash,role,father_name,mother_name,course_name,gender,roll_number,contact_number,dob) VALUES
+   ('Team Admin','admin@cultura.local',$1,'admin','','','','','','',NULL),
+   ('Aarav Member','member@cultura.local',$2,'member','Rajesh Sharma','Sunita Sharma','B.Tech Computer Science','male','CS2023001','9876543210','2003-05-14')
    ON CONFLICT(email) DO NOTHING`,[adminHash,memberHash]);
+  await c.query(`INSERT INTO alumni(name,course_name,batch_year,role_then,current_work,bio) VALUES
+   ('Ishaan Verma','B.Tech Electronics','2022','Lead singer, Music group','Software Engineer at a fintech startup','Led the Music group to two inter-college wins before graduating.'),
+   ('Priya Nair','BBA','2021','Choreographer, Dance group','Professional choreographer and dance instructor','Started her own dance studio after graduating.')
+   ON CONFLICT DO NOTHING`);
   await c.query(`INSERT INTO groups(name,description) VALUES
    ('Music','Singing, instruments and music'),('Dance','Classical, folk and contemporary dance'),('Acting','Drama, theatre and stage performance')
    ON CONFLICT DO NOTHING`);
