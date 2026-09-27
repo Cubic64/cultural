@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Cultura — Cultural Team Portal</title>
-<link rel="icon" type="image/x-icon" href="../source/icon.png">
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink)}
 button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
@@ -168,17 +167,19 @@ else sidebar.innerHTML=`<div class="eyebrow">MY PORTAL</div>${common}<div class=
 async function showPage(p,arg){try{page=p; if(p==='admin')await adminPage();else if(p==='home')await homePage();else if(p==='members')await membersPage();else if(p==='groups')await groupsPage();else if(p==='attendance')await attendancePage();else if(p==='events')await eventsPage();else if(p==='calendar')await calendarPage();else if(p==='announcements')await announcementPage();else if(p==='alumni')await alumniPage();else if(p==='profile')await profilePage();else if(p==='chat')await chatPage(arg)}catch(e){toast(e.message)}}
 async function homePage(){let [s,ev,an]=await Promise.all([api('/dashboard'),api('/competitions'),api('/announcements')]);main.innerHTML=`<div class="hero"><div class="eyebrow">${current.role==='admin'?'ADMIN DASHBOARD':'MEMBER PORTAL'}</div><h1>Hello, ${esc(current.name.split(' ')[0])} 👋</h1><p class="muted">Your cultural team, competitions, attendance, announcements and conversations in one place.</p></div><div class="grid"><div class="card stat"><strong>${s.membersOrGroups}</strong><span>${current.role==='admin'?'Members':'My Groups'}</span></div><div class="card stat"><strong>${s.competitions}</strong><span>Upcoming Competitions</span></div><div class="card stat"><strong>${s.attendance}</strong><span>${current.role==='admin'?'Attendance Records':'My Attendance Records'}</span></div></div><div class="section"><h2>📌 Upcoming Competitions</h2><div class="grid2">${eventsHtml(ev.slice(0,2))}</div></div><div class="section"><h2>📣 Announcements</h2>${an.slice(0,3).map(a=>`<div class="card notice"><b>${esc(a.title)}</b><div>${esc(a.text)}</div><small>${a.date}</small></div>`).join('')}</div>`}
 function eventsHtml(a){
-  return a.map(c=>`<div class="card event">
+  return a.map(c=>`<div class="card event" style="display:block">
     ${c.image_url?`<img src="${esc(c.image_url)}" alt="" style="width:100%;max-height:180px;object-fit:cover;border-radius:12px;margin-bottom:12px">`:''}
-    <div class="date">${esc(String(c.date||'').slice(5))}<br><small>${esc(c.time||'')}</small></div>
-    <div style="flex:1">
-      <h3>${esc(c.title)}</h3><p>${esc(c.description||'')}</p>
-      <small>📍 ${esc(c.venue||'')}</small>
-      <div style="margin-top:10px"><span class="pill">${esc(c.status||'upcoming')}</span> <span class="pill">${c.registration_count||0}${c.max_participants?'/'+c.max_participants:''} registered</span></div>
-      ${c.registration_deadline?`<small>Registration deadline: ${esc(c.registration_deadline)}</small><br>`:''}
-      ${c.attachment_url?`<a href="${esc(c.attachment_url)}" target="_blank" rel="noopener">📄 Competition document</a><br>`:''}
-      ${current.role!=='admin'?(c.registered?`<button class="btn light" onclick="unregisterCompetition(${c.id})">Cancel registration</button>`:`<button class="btn accent" onclick="registerCompetition(${c.id})">Register</button>`):''}
-      ${current.role==='admin'?`<button class="btn light" onclick="openCompetition(${c.id})">Edit</button> <button class="btn light" onclick="showParticipants(${c.id})">Participants</button> <button class="btn light" onclick="openResult(${c.id})">Result</button> <button class="btn danger" onclick="removeCompetition(${c.id})">Delete</button>`:''}
+    <div style="display:flex;gap:15px">
+      <div class="date">${esc(String(c.date||'').slice(5))}<br><small>${esc(c.time||'')}</small></div>
+      <div style="flex:1">
+        <h3>${esc(c.title)}</h3><p>${esc(c.description||'')}</p>
+        <small>📍 ${esc(c.venue||'')}</small>
+        <div style="margin-top:10px"><span class="pill">${esc(c.status||'upcoming')}</span> <span class="pill">${c.registration_count||0}${c.max_participants?'/'+c.max_participants:''} registered</span></div>
+        ${c.registration_deadline?`<small>Registration deadline: ${esc(c.registration_deadline)}</small><br>`:''}
+        ${c.attachment_url?`<a href="${esc(c.attachment_url)}" target="_blank" rel="noopener">📄 Competition document</a><br>`:''}
+        ${current.role!=='admin'?(c.registered?`<button class="btn light" onclick="unregisterCompetition(${c.id})">Cancel registration</button>`:`<button class="btn accent" onclick="registerCompetition(${c.id})">Register</button>`):''}
+        ${current.role==='admin'?`<button class="btn light" onclick="openCompetition(${c.id})">Edit</button> <button class="btn light" onclick="showParticipants(${c.id})">Participants</button> <button class="btn light" onclick="openResult(${c.id})">Result</button> <button class="btn danger" onclick="removeCompetition(${c.id})">Delete</button>`:''}
+      </div>
     </div>
   </div>`).join('')||'<div class="card">No competitions yet.</div>'
 }
